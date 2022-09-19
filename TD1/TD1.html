@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <title>JS - TD1</title>
+        <link rel="stylesheet" href="TD1.css">
+    </head>
+    <body>
+        <article>
+            <h1>TD1</h1>
+            <p>
+                A Javascript is already included in this page. It is in this .js file that you should include the necessary js code to answer the exercises.
+                <button>Useless button... for now !</button>
+            </p>
+            <section>
+                <h2>Exercise 1 - Sandbox preparation</h2>
+                <p>
+                    In order for the JavaScript to be correctly executed in this page, we need to ensure the page is fully loaded before modifying it.
+                    It should already be the case because the script tag is at the end of the body, with a defer attribute, but better be safe than sorry, we will execute the code
+                    when the browser tells the page is loaded.
+                </p>
+                <ol>
+                    <li>Add, in the JS, an event listener to document, listening to load, and calling a function named "exo1" when triggered.</li>
+                    <li>Create the function "exo1". For now, it should display "Hello World" in the console.</li>
+                    <li>Open the developer tools (right-click --> inspect, Ctrl + Shift + i, F12, depending on your browser and your OS), go to the console tab, and refresh the page.</li>
+                    <li>If whenever you refresh the page, "Hello World" appears in the console, you can add a class "solved" to this section (directly in the HTML) and start exercise 2.</li>
+                </ol>
+            </section>
+            <section>
+                <h2>Exercise 2 - DOM/CSSOM Manipulation</h2>
+                <p>
+                    We want to focus on the current exercise to solve. To do that, we want to display only the title of the exercises that have been answered and
+                    the full content of the first of the remaining exercises. The next exercises should be hidden.
+                </p>
+                <ol>
+                    <li>Update the load listener so that in addition to call exo1(), it also calls an exo2() function, and create that function.</li>
+                    <li>
+                        This function should retrieve all sections which have a class "solved", remove everything inside except for the &lt;h2&gt;.
+                        Note: they are many ways to do that. To retrieve the elements, you can use different functions you can find
+                        <a href="https://developer.mozilla.org/fr/docs/Web/API/Document">here</a> (look for functions starting by "querySelector" and "getElement").
+                        As for the elements to stop displaying, you could remove them from the HTML by modifying the innerHTML of their parent, but for the sake of learning how to modify CSS,
+                        you are asked to modify their CSS to change their display to none.
+                    </li>
+                    <li>
+                        This function should also not display the sections that have not yet been "solved", except the first one.
+                    </li>
+                    <li>
+                        Refresh the page. Exercise 1 should have no content, only its title in green, exercise 2 should be fully displayed, and the other exercises should not appear.
+                        If that's the case, you can add a class "solved" to this section and start exercise 3.
+                    </li>
+                </ol>
+            </section>
+            <section>
+                <h2>Exercise 3 - Events</h2>
+                <p>Hiding exercises to focus on the current one works well, but we might need to anticipate or remember what we did before. Let's make use the useless button.</p>
+                <ol>
+                    <li>
+                        Create a function called revertExo2 which should cancel the modification made by exo2 (to cancel a change in style on a property, you can set its value to "unset").
+                        Call that function after the call to exo2 in the load event and check the page has been reverted and all exercises are displayed again.
+                    </li>
+                    <li>
+                        Create a variable in the global scope (outside of a function) name isFocusModeOn and initialize it to false.
+                    </li>
+                    <li>
+                        After the calls to exo2 and revertExo2 in the load event, add a call to exo3 and create that function. This function should find the button in the DOM and attach it an
+                        event listener. The event to listen to will be "click", and whenever triggered it should: toggle the isFocusModeOn variable (set it to false if currently true, and vice-versa),
+                        and then call a function setFocus.
+                    </li>
+                    <li>
+                        Create the function setFocus. This function should check the isFocusModeOn variable: if true, it changes the button's text to "Stop focus" and calls exo2;
+                        if false, it changes the button's text to "Start focus" and calls revertExo2.
+                    </li>
+                    <li>
+                        Refresh the page and click a few times on the button. If focus mode is switched correctly whenever you click on the button,
+                        you can add a class "solved" to this section and start exercise 4.
+                    </li>
+                </ol>
+            </section>
+            <section>
+                <h2>Exercise 4 - Local Storage (Cookies)</h2>
+                <p>For this last exercise, we want to save on the computer the value of isFocusModeOn so that when the page is refreshed, it keeps the chosen display.</p>
+                <ol>
+                    <li>
+                        Update the exo3 function so that whenever isFocusModeOn is modified, the value is saved in the localStorage in a key called "focusMode".
+                    </li>
+                    <li>
+                        Update the load listener to call an exo4 function, and create that function.
+                    </li>
+                    <li>
+                        This function should check in the local storage the value of the key focusMode is any, update the value of the isFocusModeOn accordingly, and then call the setFocus function.
+                    </li>
+                    <li>
+                        Refresh the page. Click on the button until focus mode is on. Refresh the page: focus mode should still be on. Click on the button to stop the focus.
+                        Refresh the page, focus mode should still be off. If that's the case, you can add a solved class to this section. Well done !
+                    </li>
+                </ol>
+            </section>
+        </article>
+        <script type="application/javascript" src="TD1.js" defer></script>
+    </body>
+</html>

@@ -1,0 +1,1352 @@
+<!-- @Author Benjamin VELLA. All rights reserved. -->
+
+<!DOCTYPE html>
+<!-- If you are reading this, welcome. This page may be hard to read since all HTML, CSS, and JS resources are placed
+in only one file, but if you want to learn things, keep reading, the file is fully commented to help you. -->
+
+<!-- NB: I won't detail in the comments what is explained in the lessons. For instance, if you want to know why the
+language is specified in the <html> tag below, open this file in a decent browser and read the lesson ;) -->
+<html lang="fr">
+<head>
+    <title>HTML - CSS - JS</title>
+
+    <!-- Performances. The "preconnect" warns the browser that it will need at some point to target the given URL,
+    so it can prepare the connection instead of going idle when it has nothing more important to do.
+    The URLs below allows the use of fonts made by google (https://fonts.google.com/). -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- SEO. Probably not relevant since this page won't make it as-is on the web, but can still serve as an
+     example of how to set up SEO elements. -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Introduction au développement web avec HTML, CSS, and JS.">
+    <!-- The script below is still part of the SEO. It is called structured data and give information on web crawlers
+    about the content of the page. It is written as JSON (but other choices are possible), and follow the
+    https://schema.org structure.
+    For more info, see https://developers.google.com/search/docs/advanced/structured-data/intro-structured-data -->
+    <script type="application/ld+json">
+        {
+            "@context":"https://schema.org",
+            "@type": "Course",
+            "courseCode": "EIIN724C",
+            "name": "Langages du WEB.",
+            "description": "Descriptions illustrées des 3 langages natifs de base d'un site web : HTML, CSS, JS.",
+            "provider": {
+                "@type": "Organization",
+                "name": "Polytech Nice Sophia",
+                "sameAs": "https://polytech.univ-cotedazur.fr/"
+            }
+        }
+    </script>
+
+    <!-- I strongly advise to read this document in a decent IDE (Webstorm for instance) so that you can squash
+    the parts you're not interested in at the moment. For instance, the <style> tag below contains the entire CSS
+    of the page. You may want to hide it until you're ready to learn more about CSS. -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+    <style>
+        /* ***********************************************
+        ****************** GLOBAL RULES ******************
+        *********************************************** */
+
+        /* The star selector matches everything. It can be useful to setup default values, but a pain to overwrite. */
+        * {
+            /* box-sizing manages what is included when you use the width property. I strongly advise border-box which
+            ** is easier to manage. For more info: https://developer.mozilla.org/fr/docs/Web/CSS/box-sizing */
+            box-sizing: border-box;
+            font-family: 'Roboto Slab', serif;
+            font-size: max(16px, 2vw);
+            color: #f0f0f0;
+        }
+
+        html, body {
+            /* Setting the width and height of the body allows to use percentage in the children. */
+            width: 100vw;
+            height: 100vh;
+            /* overflow manages what happen if the content is too big for the size of the container. In this case,
+            we want each slide to fill exactly the width and height of the browser so everything else should be hidden. */
+            overflow: hidden;
+            /* Some browsers add a margin to body by default, for no reason. */
+            margin: 0;
+            /* Hexadecimal colors can defined in CSS with only 3 numbers, in which case they are duplicated: #123 --> #112233*/
+            background-color: #fff;
+        }
+
+        h1 {
+            font-size: 5vw;
+            line-height: 5vw;
+            margin: 4vh 0;
+
+            text-transform: uppercase;
+        }
+
+        h2 {
+            font-size: 4vw;
+            line-height: 4vw;
+            margin: 0;
+            font-style: italic;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        ul {
+            margin: 2vh 0;
+            padding-left: 0;
+        }
+
+        article {
+            padding: 0 1vw;
+            overflow-y: auto;
+        }
+
+        .slide {
+            /* Slides start outside of the visible screen so that we can display the one we want when we want it. */
+            position: fixed;
+            top: 100vh;
+            left: 0;
+
+            width: 100vw;
+            height: 100vh;
+
+            background-color: #111;
+        }
+
+        .clickable {
+            cursor: pointer;
+            text-decoration: underline;
+            text-decoration-color: #aaa;
+        }
+
+        section:not(.mainAndSide) article, section main {
+            /* Full page articles takes all the height (100vh) minus the h1 title of the slide (5vw + 4vh margin top and bottom) */
+            max-height: calc(100vh - 5vw - 8vh);
+            overflow-y: auto;
+        }
+
+        section.mainAndSide {
+            display: grid;
+            grid-template: auto 1fr / minmax(300px, 1fr) max(35vw, 300px);
+            align-items: start;
+        }
+
+        .mainAndSide h1 {
+            grid-column: 1 / 3;
+            grid-row: 1;
+        }
+
+        .mainAndSide main {
+            grid-column: 1;
+            grid-row: 2;
+            padding: 0 1vw;
+        }
+
+        .mainAndSide aside {
+            grid-column: 2;
+            grid-row: 2;
+
+            /* aside elements takes all the height (100vh) minus the h1 title of the slide (5vw + 4vh margin top and bottom) */
+            height: calc(100vh - 5vw - 8vh);
+            width: max(35vw, 300px);
+
+            overflow-y: auto;
+        }
+
+        aside img {
+            object-fit: contain;
+            width: 100%;
+            height: 100%;
+        }
+
+        code, code * {
+            font-size: max(16px, 1.5vw);
+        }
+
+        code {
+            display: block;
+            font-style: italic;
+            border: 1px #a00 solid;
+            padding: 40px 1vw 1vh 1vw;
+            position: relative;
+        }
+
+        code::before {
+            content: "code";
+
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            display: inline-block;
+            padding: 0 5px;
+
+            background-color: #a00;
+
+            border-radius: 0 0 5px 0;
+
+            font-style: normal;
+        }
+
+        .codeComment {
+            display: block;
+            color: #aaa;
+        }
+
+        .specialCodeLine {
+            color: #f00;
+        }
+
+        .secondaryCodeLine {
+            color: #0f0;
+        }
+
+        small {
+            display: block;
+        }
+
+        small, small .inlineCode, small a {
+            font-style: italic;
+            font-size: max(12px, 1vw);
+        }
+
+        #goToMenu {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index:10;
+
+            color: #000;
+            border-radius:10px;
+
+            cursor: pointer;
+        }
+
+        .inlineCode {
+            font-style: italic;
+            font-weight: bold;
+            font-size: max(16px, 1.5vw);
+        }
+
+        /* ***********************************************
+        ************** SLIDE SPECIFIC RULES **************
+        *********************************************** */
+
+        #page1 {
+            top: 0;
+        }
+
+        #page2 {
+            display: grid;
+            grid-template-rows: auto 1fr;
+        }
+
+        #page2 nav {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            min-height: 0;
+        }
+
+        #page2 nav ul {
+            text-align: center;
+            list-style-type: none;
+        }
+
+        #cssPrioResult1 {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <button id="goToMenu" onclick="showPage(2)">MENU</button>
+
+    <section class="slide" id="page1">
+        <h1>Website creation</h1>
+        <h2>HTML, CSS, JS</h2>
+    </section>
+
+    <section class="slide" id="page2">
+        <h1>Content</h1>
+        <nav>
+            <article>
+                <h2>HTML</h2>
+                <ul>
+                    <li class="clickable" onclick="showPage(3)">Introduction</li>
+                    <li class="clickable" onclick="showPage(5)">Markup syntax</li>
+                    <li class="clickable" onclick="showPage(6)">HTML5 Structure</li>
+                </ul>
+            </article>
+            <article>
+                <h2>CSS</h2>
+                <ul>
+                    <li class="clickable" onclick="showPage(12)">Introduction</li>
+                    <li class="clickable" onclick="showPage(13)">Syntax</li>
+                    <li class="clickable" onclick="showPage(14)">Selectors</li>
+                    <li>Dimensions</li> <!--(margin padding width height border-box)-->
+                    <li>Positioning</li> <!--(fixed, absolute, relative)-->
+                    <li>Display Flex</li>
+                    <li>Display Grid</li>
+                    <li>Transitions</li>
+                </ul>
+            </article>
+            <article>
+                <h2>JS</h2>
+                <ul>
+                    <li class="clickable" onclick="showPage(22)">Introduction</li>
+                    <li class="clickable" onclick="showPage(23)">Syntax</li>
+                    <li class="clickable" onclick="showPage(30)">DOM and CSSOM Manipulation</li>
+                    <li class="clickable" onclick="showPage(33)">Events</li>
+                    <li class="clickable" onclick="showPage(34)">Cookies</li>
+                    <li>Networking</li>
+                    <li>NodeJS</li>
+                </ul>
+            </article>
+        </nav>
+    </section>
+
+    <section class="slide" id="page3">
+        <h1>HTML</h1>
+        <article>
+            <h2>Introduction</h2>
+            <p class="step s1">HTML (HyperText Markup Language) is a markup language used to define the content of a page.</p>
+            <p class="step s2">1989 : Tim Berners-Lee writes a paper about a way to share information efficiently.</p>
+            <p class="step s3">1990 : Development of the 3 main web technologies: URL to locate a document, HTTP protocol to communicate, and HTML to display information --> The World Wide Web (www) is born.</p>
+            <p class="step s4">1991 : <a href="http://info.cern.ch/hypertext/WWW/TheProject.html" target="_blank">First public web page ever created</a></p>
+            <p class="step s5">2014: HTML5 is released to the world.</p>
+        </article>
+    </section>
+
+    <section class="slide mainAndSide" id="page4">
+        <h1>HTML</h1>
+        <main>
+            <h2>HTML5</h2>
+            <p>
+                HTML has evolved throughout the years to match the needs of the society, from a way to share data with a few people
+                to the main information hub and selling/buying platform for billions of people around the world.
+            </p>
+            <p class="step s1">The last major revision of HTML - HTML5 - focus on semantics: it adds tags which have a meaning, so that machines (and humans) can easily understand what the content represents.</p>
+        </main>
+        <aside>
+            <img src="img/html45.webp" alt="Example of a page layout in HTML4 and HTML5" class="step s2">
+        </aside>
+    </section>
+
+    <section class="slide" id="page5">
+        <h1>HTML</h1>
+        <article>
+            <h2>Markup syntax</h2>
+            <p>
+                HTML uses tags to encapsulate data:
+                <code>
+                    &lt;tagName propertyName1="propertyValue1" propertyName2="propertyValue2" ... &gt; Content &lt;/tagName&gt;
+                </code>
+                <div class="step s1">Some tags cannot contain any content, in which case you must not add a closing tag. It's the case of <span class="inlineCode">img</span>,
+                    <span class="inlineCode">meta</span>, <span class="inlineCode">link</span> and a few others:
+                    <code>
+                        &lt;img src="pathOrUrlToImage" alt="Alternative text in case the image cannot be displayed" &gt;
+                    </code>
+                </div>
+            </p>
+            <p class="step s2">Content of a tag can be data (text, image, ...) but also other tags, creating a tree:
+                <code>
+                    &lt;section&gt;<br>
+                        &lt;h1&gt;Section title&lt;/h1&gt;<br>
+                        &lt;article&gt;<br>
+                            &lt;h2&gt;Article title&lt;/h2&gt;<br>
+                            &lt;p&gt;Content of the article&lt;/p&gt;<br>
+                        &lt;/article&gt;<br>
+                    &lt;/section&gt;
+                </code>
+            </p>
+        </article>
+    </section>
+
+    <section class="slide mainAndSide" id="page6">
+        <h1>HTML</h1>
+        <main>
+            <h2>HTML Structure</h2>
+            <p class="step s1">To create an HTML5 page, you need to declare a given <span class="inlineCode">doctype</span>. After that you can start the page markup tree.</p>
+            <p class="step s2">Everything should be encapsulated in a <span class="inlineCode">html</span> tag having a lang attribute.</p>
+            <p class="step s3">Inside the html tag, only 2 possible tags: <span class="inlineCode">&lt;head&gt;</span> and <span class="inlineCode">&lt;body&gt;</span>.</p>
+            <p class="step s3"><span class="inlineCode">&lt;head&gt;</span> contains all the non-visible content (metadata, description, CSS, ...).</p>
+            <p class="step s3"><span class="inlineCode">&lt;body&gt;</span> contains all visible elements (text, images, links, ...).</p>
+        </main>
+        <aside>
+            <code>
+                <span class="step s1">&lt;!DOCTYPE html&gt;</span><br>
+                <span class="step s2">&lt;html lang="en"&gt;</span><br>
+                <span class="step s3">    &lt;head&gt;<br>
+                        ...<br>
+                    &lt;/head&gt;<br>
+                    &lt;body&gt;<br>
+                        ...<br>
+                    &lt;/body&gt;<br></span>
+                <span class="step s2">&lt;/html&gt;</span>
+            </code>
+        </aside>
+    </section>
+
+    <section class="slide mainAndSide" id="page7">
+        <h1>HTML</h1>
+        <main>
+            <h2>HTML5 Structure - head</h2>
+            <p class="step s1"><span class="inlineCode">&lt;head&gt;</span> contains the non-visible elements: descriptions, configurations, scripts, style, links to external resources, ...</p>
+            <p class="step s2">
+                - <span class="inlineCode">&lt;script&gt;</span> tag is usually associated with JavaScript, but its <span class="inlineCode">type</span> attribute can be specified,
+                allowing other scripts to be executed. To load an external JavaScript file, use this tag and add the <span class="inlineCode">src</span> attribute
+                to link to the file to load.
+                <small><span class="inlineCode">async</span> attribute makes the script download asynchronously, and
+                    <span class="inlineCode">defer</span> attribute makes it also load after the page has been parsed.
+                </small>
+            </p>
+            <p class="step s3">
+                - <span class="inlineCode">&lt;link&gt;</span> tag is used to connect to another document. It requires 2 attributes: <span class="inlineCode">rel</span>
+                and <span class="inlineCode">href</span>. <span class="inlineCode">href</span>'s value is the URL to the resource ;
+                <span class="inlineCode">rel</span>'s value is the type of link to create: most often it will be <span class="inlineCode">"stylesheet"</span>
+                indicating the need to load a CSS file, but it can also be <span class="inlineCode">"preconnect"</span> for instance,
+                to ask the browser to prepare connections to the given URL.
+            </p>
+        </main>
+        <aside>
+            <code>
+                <span class="step s1">&lt;head&gt;<br></span>
+                <span class="step s2">    &lt;script&gt;<br></span>
+                <span class="step s2">        console.log("Hello World.");<br></span>
+                <span class="step s2">    &lt;/script&gt;<br></span>
+                <span class="step s3">    &lt;link rel="stylesheet" href="css/global.css" &gt;<br></span>
+                <span class="step s1">&lt;/head&gt;<br></span>
+            </code>
+        </aside>
+    </section>
+
+    <section class="slide mainAndSide" id="page8">
+        <h1>HTML</h1>
+        <main>
+            <h2>HTML5 Structure - head</h2>
+            <p class="step s1">
+                - <span class="inlineCode">&lt;meta&gt;</span> tag represents metadata about the page, may it be description, encoding, or other configurations.
+                Its attributes depend on which metadata will be represented, but it usually is <span class="inlineCode">name</span> for the type of metadata
+                and <span class="inlineCode">content</span> for the value.
+                <small>(The most common exception is the charset, which is mandatory and written like in the example on the right.)</small>
+            </p>
+            <p class="step s2">
+                - <span class="inlineCode">&lt;style&gt;</span> allows to write CSS rules directly inside the HTML document (it is the case in this page to reduce the number of files).
+            </p>
+            <p class="step s3">
+                - <span class="inlineCode">&lt;title&gt;</span> is the text written in the current tab of the browser.
+            </p>
+        </main>
+        <aside>
+            <code>
+                &lt;head&gt;<br>
+                    &lt;script&gt;<br>
+                        console.log("Hello World.");<br>
+                    &lt;/script&gt;<br>
+                    &lt;link rel="stylesheet" href="css/global.css"&gt;<br>
+                <span class="step s1">    &lt;meta charset="UTF-8"&gt;<br></span>
+                <span class="step s2">    &lt;style&gt;<br></span>
+                <span class="step s2">        * {<br></span>
+                <span class="step s2">            box-sizing: border-box;<br></span>
+                <span class="step s2">        }<br></span>
+                <span class="step s2">    &lt;/style&gt;<br></span>
+                <span class="step s3">    &lt;title&gt;<br></span>
+                <span class="step s3">        HTML - CSS - JS<br></span>
+                <span class="step s3">    &lt;/title&gt;<br></span>
+                &lt;/head&gt;<br>
+            </code>
+        </aside>
+    </section>
+
+    <section class="slide" id="page9">
+        <h1>HTML</h1>
+        <article>
+            <h2>HTML5 Structure - body</h2>
+            <p class="step s1"><span class="inlineCode">&lt;body&gt;</span> contains the visible elements: text, images, video, graphs, tables, ...</p>
+            <p class="step s2">
+                The structure of a page is very important, and especially in HTML5. To easily understand the layout, some tags have been created:
+                <code>
+                    &lt;body&gt;<br>
+                        &lt;header&gt;Top of the page, for logo, login, search bar... &lt;/header&gt;<br>
+                        &lt;nav&gt;Menu &lt;/nav&gt;<br>
+                        &lt;main&gt;Main content of the page &lt;/main&gt;<br>
+                        &lt;aside&gt;Side content related to the main &lt;/aside&gt;<br>
+                        &lt;footer&gt;Bottom of the page, for links, contact, sitemap, ... &lt;/footer&gt;<br>
+                    &lt;/body&gt;<br>
+                </code>
+            </p>
+        </article>
+    </section>
+
+    <section class="slide" id="page10">
+        <h1>HTML</h1>
+        <article>
+            <h2>HTML5 Structure - body</h2>
+            <p class="step s1">
+                Having a clear layout is not enough: pages may be big, and it has become necessary to be able to extract parts of a page (may it be for sharing on social media,
+                or having a robot extract data from them). That's why some tags exist to describe the content of the main part of a page:
+                <code class="step s2">
+                    &lt;section&gt;<br>
+                        &lt;h1&gt;Sections must have a title.&lt;/h1&gt;<br>
+                        &lt;article&gt;<br>
+                            &lt;h2&gt;Articles too must have a title.&lt;/h2&gt;<br>
+                            &lt;p&gt;In this example an article is inside a section, but articles can also have sections. &lt;/p&gt;<br>
+                        &lt;/article&gt;<br>
+                    &lt;/section&gt;<br>
+                </code>
+            </p>
+            <p class="step s3">
+                Plenty of other tags exist. For instance, in this page <span class="inlineCode">&lt;code&gt;</span> have been used to display lines of code, <span class="inlineCode">&lt;small&gt;</span>
+                to add small notes below a content, and <span class="inlineCode">&lt;a&gt;</span> for links. An exhaustive list can be found
+                <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element" target="_blank">here</a>.<br>
+                Sometimes, meaningless tags are required for layout or styling purposes. In this case, <span class="inlineCode">&lt;div&gt;</span> and
+                <span class="inlineCode">&lt;span&gt;</span> are the default "block" and "inline" tags (see CSS parts for more info on that).
+            </p>
+        </article>
+    </section>
+
+    <section class="slide" id="page11">
+        <h1>HMTL, CSS, JS</h1>
+        <h2>CSS part</h2>
+    </section>
+
+    <section class="slide" id="page12">
+        <h1>CSS</h1>
+        <article>
+            <h2>CSS - Introduction</h2>
+            <p class="step s1">CSS (Cascading Style Sheets) is the language used to define the style of a page, from the global layout to the color of a letter.</p>
+            <p class="step s2">It allows the developer to write rules which apply to a chosen set of HTML elements, and add some properties to them to change their style.</p>
+            <p class="step s3">It is also possible to choose the conditions in which a CSS rule will apply (for instance, some properties applied only when the user's mouse hovers something).</p>
+        </article>
+    </section>
+
+    <section class="slide" id="page13">
+        <h1>CSS</h1>
+        <article>
+            <h2>CSS - Syntax</h2>
+            <p class="step s1">CSS can be written in a <span class="inlineCode">&lt;style&gt;</span> tag in the <span class="inlineCode">&lt;head&gt;</span> part of the page, or in an external CSS file.</p>
+            <p class="step s2">In any case, the content of the <span class="inlineCode">&lt;style&gt;</span> tag is the same as the content of a CSS file: for each rule, 1 or more selectors separated by commas,
+                a pair of brackets, and inside the brackets a list properties to change and their values. For instance:
+                <code>
+                    <span class="codeComment">/* Rule 1 */</span>
+                    body {<br>
+                        color: red;<br>
+                    }<br>
+                    <span class="codeComment">/* Rule 2 */</span>
+                    article, div {<br>
+                        background-color: blue;<br>
+                    }
+                </code>
+                <span  class="step s3">1) Colorizes all the texts of the <span class="inlineCode">&lt;body&gt;</span> and its children in red.<br></span>
+                <span  class="step s4">2) Paints the background of all <span class="inlineCode">&lt;article&gt;</span> and <span class="inlineCode">&lt;div&gt;</span> elements in blue.</span>
+            </p>
+        </article>
+    </section>
+
+    <section class="slide mainAndSide" id="page14">
+        <h1>CSS</h1>
+        <main>
+            <h2>CSS - Selectors</h2>
+            <p class="step s1">To understand how to select an element, the first step is to understand what are the characteristics of an HTML element. Given the example on the right, the red line:</p>
+            <p class="step s2">
+                1) Is a <span class="inlineCode">&lt;div&gt;</span>. In CSS we can select a tag by simply writing its name: <span class="inlineCode">div {color: blue;}</span>
+                <small>Note that it would also select the green div.</small>
+            </p>
+            <p class="step s3">
+                2) Has an id, <span class="inlineCode">uniqueId42</span>. IDs must be unique, so it's an easy way to be sure only 1 element will be selected. Targeting an ID in CSS is done
+                by using #: <span class="inlineCode">#uniqueId42 {color: blue;}</span>
+            </p>
+        </main>
+        <aside>
+            <code class="step s1">
+                &lt;article class="foo"&gt;<br>
+                    &lt;h1&gt;Title of the article&lt;/h1&gt;<br>
+                    <span class="specialCodeLine">&lt;div class="foo bar" id="uniqueId42"&gt; Content &lt;/div&gt;</span><br>
+                    <span class="secondaryCodeLine">&lt;div class="bar" id="uniqueId43"&gt; Another content &lt;/div&gt;</span><br>
+                &lt;/article&gt;
+            </code>
+        </aside>
+    </section>
+
+    <section class="slide mainAndSide" id="page15">
+        <h1>CSS</h1>
+        <main>
+            <h2>CSS - Selectors</h2>
+            <p>Given the example on the right, the red line:</p>
+            <p class="step s1">
+                3) Has 2 classes, <span class="inlineCode">foo</span> and <span class="inlineCode">bar</span>. In CSS we can select a class by using . (dot):
+                <span class="inlineCode">.foo {color: blue;}</span>
+                <small>Note that this would also select the article.</small>
+            </p>
+            <p class="step s2">
+                3bis) It is possible to select elements which have multiple particularities: <span class="inlineCode">div.foo {color: blue;}</span> will select all
+                <span class="inlineCode">&lt;div&gt;</span> which have a class <span class="inlineCode">foo</span>. The only one matching all those criteria is the red element
+                (<span class="inlineCode">&lt;article&gt;</span> is not a <span class="inlineCode">&lt;div&gt;</span>,
+                and the green <span class="inlineCode">&lt;div&gt;</span> doesn't have the foo class).
+                <small>Note that <span class="inlineCode">.foo.bar {color: blue;}</span> would have also worked to select only the red div since it's the only one having both classes.</small>
+            </p>
+        </main>
+        <aside>
+            <code>
+                &lt;article class="foo"&gt;<br>
+                    &lt;h1&gt;Title of the article&lt;/h1&gt;<br>
+                    <span class="specialCodeLine">&lt;div class="foo bar" id="uniqueId42"&gt; Content &lt;/div&gt;</span><br>
+                    <span class="secondaryCodeLine">&lt;div class="bar" id="uniqueId43"&gt; Another content &lt;/div&gt;</span><br>
+                &lt;/article&gt;
+            </code>
+        </aside>
+    </section>
+
+    <section class="slide mainAndSide" id="page16">
+        <h1>CSS</h1>
+        <main>
+            <h2>CSS - Selectors</h2>
+            <p>Given the example on the right, the red line:</p>
+            <p class="step s1">
+                4) Is a sibling (same tree level) of <span class="inlineCode">&lt;h1&gt;</span>. In CSS we can select a sibling placed after a given element by using ~ (tilde):
+                <span class="inlineCode">h1 ~ div {color: blue;}</span>
+                <small>Note that this would also select the green div because it is also a sibling of h1 appearing after.</small>
+            </p>
+            <p class="step s2">
+                4bis) Is a DIRECT sibling of <span class="inlineCode">&lt;h1&gt;</span> (an element placed at the same level, directly after h1).
+                In CSS we can select a sibling placed right after a given element by using +:
+                <span class="inlineCode">h1 + div {color: blue;}</span>
+            </p>
+        </main>
+        <aside>
+            <code>
+                &lt;article class="foo"&gt;<br>
+                    &lt;h1&gt;Title of the article&lt;/h1&gt;<br>
+                    <span class="specialCodeLine">&lt;div class="foo bar" id="uniqueId42"&gt; Content &lt;/div&gt;</span><br>
+                    <span class="secondaryCodeLine">&lt;div class="bar" id="uniqueId43"&gt; Another content &lt;/div&gt;</span><br>
+                &lt;/article&gt;
+            </code>
+        </aside>
+    </section>
+
+    <section class="slide mainAndSide" id="page17">
+        <h1>CSS</h1>
+        <main>
+            <h2>CSS - Selectors</h2>
+            <p>Given the example on the right, the red line:</p>
+            <p class="step s1">
+                5) Is a descendant of <span class="inlineCode">&lt;article&gt;</span>. In CSS we can select a descendant by simply separating selectors by a space:
+                <span class="inlineCode">article div {color: blue;}</span>
+                <small>Note that this would also select the green div because it is also a descendant of article.</small>
+            </p>
+            <p class="step s2">
+                5bis) Is a child of <span class="inlineCode">&lt;article&gt;</span>. In CSS we can select a child by using &gt;:
+                <span class="inlineCode">article &gt; div {color: blue;}</span>
+                <small>Note that this would also select the green div because it is also a descendant of article.</small>
+            </p>
+        </main>
+        <aside>
+            <code>
+                &lt;article class="foo"&gt;<br>
+                    &lt;h1&gt;Title of the article&lt;/h1&gt;<br>
+                    <span class="specialCodeLine">&lt;div class="foo bar" id="uniqueId42"&gt; Content &lt;/div&gt;</span><br>
+                    <span class="secondaryCodeLine">&lt;div class="bar" id="uniqueId43"&gt; Another content &lt;/div&gt;</span><br>
+                &lt;/article&gt;
+            </code>
+        </aside>
+    </section>
+
+    <section class="slide mainAndSide" id="page18">
+        <h1>CSS</h1>
+        <main>
+            <h2>CSS - Selectors</h2>
+            <p>We have seen almost all the most common ways to select the red element, but we are missing one important part: pseudo-classes.</p>
+            <p class="step s1">
+                A pseudo-class is a keyword or a function added to a selector to get more precise information about it.
+                The list can be found <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes" target="_blank">here</a>.
+            </p>
+            <p class="step s2">
+                For instance, the pseudo class <span class="inlineCode">:nth-child(k)</span> selects elements which are the kth children of their parents.
+                In our example, the red div is the second child of its parent (first is h1, third is the red div), so we could use:
+                <code>
+                    div:nth-child(2) {color: blue;}
+                </code>
+            </p>
+        </main>
+        <aside>
+            <code>
+                &lt;article class="foo"&gt;<br>
+                    &lt;h1&gt;Title of the article&lt;/h1&gt;<br>
+                    <span class="specialCodeLine">&lt;div class="foo bar" id="uniqueId42"&gt; Content &lt;/div&gt;</span><br>
+                    <span class="secondaryCodeLine">&lt;div class="bar" id="uniqueId43"&gt; Another content &lt;/div&gt;</span><br>
+                &lt;/article&gt;
+            </code>
+        </aside>
+    </section>
+
+    <section class="slide" id="page19">
+        <h1>CSS</h1>
+        <article>
+            <h2>CSS - Priority</h2>
+            <p class="step s1">
+                Let's say different rules target the same element. Then they are merged and all apply. But what if they set different values for the same property
+                (for instance, <span class="inlineCode">color: blue;</span> and <span class="inlineCode">color: red;</span>) ?
+            </p>
+            <p class="step s2">
+                CSS sorts the selectors by precision. Then, if it has to choose between values, it will take the value of the most precise selector.
+                Order is: id &gt;&gt; class &gt;&gt; tag &gt;&gt; attribute.
+            </p>
+            <p class="step s3">
+                 If a selector is composed of multiple elements (<span class="inlineCode">#myId article p.blabla { }</span>), it will "sum" the importance of each individual selector
+                (imagine 0.1 point for each attribute, 1 point for each tag, 10 for each class, and 100 for each id in the selector.
+                <small>This is not a real calculation: setting 11 classes won't make the selector more important than 1 id. It's just the idea.</small>
+            </p>
+        </article>
+    </section>
+
+    <section class="slide mainAndSide" id="page20">
+        <h1>CSS</h1>
+        <main>
+            <h2>CSS - Priority</h2>
+            <p>
+                More exactly, CSS engines read CSS in the order it is given to it, and whenever it has to update a property's value for an element,
+                it will do so unless the selector from which last value was set is more precise than the current one. That is why, if 2 selectors have the same precision,
+                the last one read by the engine will have priority.
+            </p>
+            <p class="step s1">
+                There is a way to overwrite this feature and force the CSS engine to keep the value from a lesser-precise selector: by adding "!important" after a key/value pair.
+            </p>
+        </main>
+        <aside class="step s1">
+            HTML:
+            <code>
+                &lt;div class="c1" id="i1"&gt;<br>
+                     &lt;div class="c2" id="i2"&gt;<br>
+                        &lt;p class="c3" id="i3"&gt; Content &lt;/p&gt;<br>
+                    &lt;/div&gt;<br>
+                &lt;/div&gt;
+            </code>
+
+            CSS:
+            <code>
+                p { color: green <span class="specialCodeLine">!important</span>;}<br>
+                div.c1#i1 > div.c2#i2 > p.c3#i3 { color: blue; }<br>
+            </code>
+            Result:
+                <span id="cssPrioResult1">Content</span>
+        </aside>
+    </section>
+
+    <section class="slide" id="page21">
+        <h1>HMTL, CSS, JS</h1>
+        <h2>JS part</h2>
+    </section>
+
+    <section class="slide" id="page22">
+        <h1>JS</h1>
+        <article>
+            <h2>Introduction</h2>
+            <p class="step s1">
+                Javascript is a programming language created in 1995 by Brendan Eich for Netscape. It was later submitted to Ecma International in order to have a standard specification
+                for all browsers to conform to, and in 1997 the first ECMAScript specification was released.
+            </p>
+            <p class="step s2">
+                Javascript is an object-oriented multi-paradigm language supporting event-driven, functional and imperative programming styles.
+            </p>
+            <p class="step s3">
+                It is mainly used in web browsers to manipulate the content of a web page, but can also be run server side to perform all sort of tasks.
+            </p>
+        </article>
+    </section>
+
+    <section class="slide" id="page23">
+        <h1>JS</h1>
+        <article>
+            <h2>Syntax - Variables</h2>
+            <p class="step s1">
+                Typing in JS is dynamic (i.e. types are checked at runtime and types are associated with a value and not an expression)
+                and weak (i.e. you don't need consistency in types, you can add a number and a string, or check if an array is true or false).
+            </p>
+            <p class="step s2">
+                Since type mixing is possible and not checked before runtime, it can lead to problems and inconsistencies, but can also allow for very fast development.
+            </p>
+            <p class="step s3">
+                There are 3 ways to declare a variable: <br>
+                <span class="step s4">- <span class="inlineCode">var</span> is the "old" way, the only one available before ES6 (EcmaScript 2015): <span class="inlineCode">var i = 5;</span><br></span>
+                <span class="step s5">- <span class="inlineCode">let</span> is the new "var". There are some differences between the 2, but we can ignore them for now:
+                    <span class="inlineCode">let i = 5;</span><br></span>
+                <span class="step s6">- <span class="inlineCode">const</span> add a constraint: the value cannot be modified: <span class="inlineCode">const i = 5;</span></span>
+            </p>
+        </article>
+    </section>
+
+    <section class="slide" id="page24">
+        <h1>JS</h1>
+        <article>
+            <h2>Syntax - Array</h2>
+            <p class="step s1">
+                An array is a collection of elements. In JS, you can define an array by using [ ] :  <span class="inlineCode">let myArray = [1, 2, 3];</span>.
+                <small class="step s2">
+                    Since JS is object-oriented, everything can be defined as an object. So technically you can declare an array by using the constructor of the Array class:
+                    <span class="inlineCode">let myArray = new Array(1, 2, 3);</span>.
+                </small>
+                <code class="step s3">
+                    let myArray = [];
+                    <span class="codeComment">// We can reassign a new value to our variable:</span>
+                    myArray = [1, 2];
+                    <span class="step s4">
+                        <span class="codeComment">// To add an element at the end of the list, use .push:</span>
+                        myArray.push(3);
+                    </span>
+                    <span class="step s5">
+                        <span class="codeComment">// At this point myArray is [1, 2, 3]. To add an element at the beginning of the list, use .unshift:</span>
+                        myArray.unshift(0);
+                    </span>
+                    <span class="step s6">
+                        <span class="codeComment">// At this point myArray is [0, 1, 2, 3]. To remove the element at the beginning of the list, use .shift:</span>
+                        myArray.shift();
+                    </span>
+                    <span class="step s7">
+                        <span class="codeComment">// At this point myArray is [1, 2, 3]. To remove the element at the end of the list, use .pop:</span>
+                        myArray.pop();
+                    </span>
+                    <span class="step s8">
+                        <span class="codeComment">// At this point myArray is [1, 2]. To get/set an element of the array, use [index]:</span>
+                        myArray[1] = 5;
+                        <span class="codeComment">// At this point myArray is [1, 5]. Don't forget that indexes start at 0, that's why myArray[1] replaced the second element.</span>
+                    </span>
+                </code>
+                <small class="step s9">
+                    If you want to copy a part of your array, see <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/slice" target="_blank">.slice</a>.
+                    If you want to replace some parts of the original array, see
+                    <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/splice" target="_blank">.splice</a>.
+                </small>
+            </p>
+        </article>
+    </section>
+
+    <section class="slide" id="page25">
+        <h1>JS</h1>
+        <article>
+            <h2>Syntax - Dict</h2>
+            <p class="step s1">
+                A dict is a collection of key/value pairs. In JS, you can define a Dict by using { } :  <span class="inlineCode">let myDict = { a: 5, b: 10 };</span>.
+                <code class="step s2">
+                    let myDict = {};
+                    <span class="step s3">
+                        <span class="codeComment">// To add a key/value pair in the dict, use [ ]:</span>
+                        myDict["a"] = 2;
+                        <span class="codeComment">// myDict is now {a: 2}</span>
+                    </span>
+                    <span class="step s4">
+                        <span class="codeComment">// You can also use . to add an element:</span>
+                        myDict.b = 4;
+                        <span class="codeComment">// myDict is now {a: 2, b: 4}</span>
+                    </span>
+                    <span class="step s5">
+                        <span class="codeComment">// To access a key, it's the same:</span>
+                        let valueOfb = myDict.b;<br>
+                        let valueOfbTheOtherWay = myDict["b"];
+                    </span>
+                    <span class="step s6">
+                        <span class="codeComment">// To delete a key, use delete:</span>
+                        delete myDict.a;
+                        <span class="codeComment">// myDict is now {b: 4}</span>
+                    </span>
+                </code>
+            </p>
+        </article>
+    </section>
+
+    <section class="slide" id="page26">
+        <h1>JS</h1>
+        <article>
+            <h2>Syntax - Function as Function</h2>
+            <p class="step s1">
+                A function can be considered for 2 use cases. In this first case, we will consider the standard way of using functions. To define a function, use the "function" keyword:
+                <code>
+                    <span class="step s2">
+                        function a() { ... }<br>
+                        <span class="codeComment">// Or:</span>
+                        let a = function() { ... }<br>
+                    </span>
+                    <span class="step s3">
+                        <span class="codeComment">// To call a function, type its name and add ( ):</span>
+                        a();
+                    </span>
+                    <span class="step s4">
+                        <span class="codeComment">// If the function should take arguments, add them to the declaration:</span>
+                        function a(arg1, arg2) { ... }<br>
+                        ...<br>
+                        a(3, 17);
+                    </span>
+                    <span class="step s5">
+                        <span class="codeComment">// If the function should return a result, use the "return keyword":</span>
+                        function mult(arg1, arg2) { return arg1 * arg2; }<br>
+                        ...<br>
+                        let result = mult(3, 17);
+                    </span>
+                </code>
+            </p>
+        </article>
+    </section>
+
+    <section class="slide" id="page27">
+        <h1>JS</h1>
+        <article>
+            <h2>Syntax - Function as Class</h2>
+            <p class="step s1">
+                A function can also be a class:
+                <code>
+                    <span class="step s2">
+                        function myClass() { ... }<br>
+                        ...<br>
+                        let myInstance = new myClass();
+                    </span>
+                    <span class="step s3">
+                        <span class="codeComment">// To store variable in your object, use "this" keyword:</span>
+                        function myClass(arg1, arg2) {<br>
+                            this.sum = arg1 + arg2;<br>
+                        }<br>
+                        ...<br>
+                        let myInstance = new myClass(38, 13);<br>
+                        let additionResult = myInstance.sum;
+                    </span>
+                    <span class="step s4">
+                        <span class="codeComment">// A function can also be part of another function:</span>
+                        function myClass(arg1, arg2) {<br>
+                            this.x = arg1;<br>
+                            this.y = arg2;<br>
+                            this.divide = function() { return this.x / this.y; }<br>
+                        }<br>
+                        ...<br>
+                        let myInstance = new myClass(765, 15);<br>
+                        ...<br>
+                        let result = myInstance.divide();
+                    </span>
+                </code>
+            </p>
+        </article>
+    </section>
+
+    <section class="slide" id="page28">
+        <h1>JS</h1>
+        <article>
+            <h2>Syntax - Conditions</h2>
+            <p class="step s1">
+                To execute a code only in certain cases, you need to use a conditional instruction.
+                <code>
+                    <span class="step s2">
+                        <span class="codeComment">// The most common is the if statement:</span>
+                        if (condition) { ... }
+                    </span>
+                    <span class="step s3">
+                        <span class="codeComment">// If you have different conditions to test, use else if:</span>
+                        if (condition) { ... }<br>
+                        else if (otherCondition) { ... }<br>
+                    </span>
+                    <span class="step s4">
+                        <span class="codeComment">// If you have a default code, use else:</span>
+                        if (condition) { ... }<br>
+                        else if (otherCondition) { ... }<br>
+                        else { ... }<br>
+                    </span>
+                    <span class="step s5">
+                        <span class="codeComment">// For a short if-else, you can use the ternary operator:</span>
+                        let result = condition ? ... : ...
+                    </span>
+                </code>
+            </p>
+            <p class="step s6">
+                A condition is an expression which is either True or False. It can be a variable (in JS, everything is considered True, except: 0, null, undefined, "", and NaN),
+                a comparaison (<, <=, >, >=, ==, !=) or a composition of variables and comparisons (a && b is True only if both a and b are True ; a || b is True if a and/or b is True).
+            </p>
+        </article>
+    </section>
+
+    <section class="slide" id="page29">
+        <h1>JS</h1>
+        <article>
+            <h2>Syntax - Looping</h2>
+            <p class="step s1">
+                You often need to loop through collections to find compute the result you need. There are many way of doing that in js:
+                <code>
+                    let myArray = [3, 5, 3, 4];<br>
+                    let myDict = { x: 1, y: 7 };<br>
+                    <span class="step s2">
+                        <span class="codeComment">// The classic for(init;condition;iteration) loop:</span>
+                        let sum1 = 0;<br>
+                        for(let i=0 ; i < myArray.length ; i++) {<br>
+                            sum1 += myArray[i];<br>
+                        }
+                    </span>
+                    <span class="step s3">
+                        <span class="codeComment">// On arrays, we can use the for...of loop:</span>
+                        let sum1 = 0;<br>
+                        for(let value of myArray) {<br>
+                            sum1 += value;<br>
+                        }
+                        <small>It is also possible to use <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach" target="_blank">forEach</a>.</small>
+                    </span>
+                    <span class="step s4">
+                        <span class="codeComment">// On Dictionaries, we can use the for...in loop:</span>
+                        let sum1 = 0;<br>
+                        for(let key in myDict) {<br>
+                            sum1 += myDict[key];<br>
+                        }
+                        <small>
+                            It is also possible, when working on dict, to use Object.keys(myDict) to get an array containing all keys of myDict and
+                            Object.values(myDict) to get an array containing all the values of myDict (and loop using for...of).
+                        </small>
+                    </span>
+                </code>
+            </p>
+        </article>
+    </section>
+
+    <section class="slide" id="page30">
+        <h1>JS</h1>
+        <article>
+            <h2>DOM</h2>
+            <p class="step s1">
+                When a browser loads an HTML page, it recreates the tree corresponding to the page. This tree is called the Document Object Model (DOM).
+                Doing so allow developers to easily manipulate the HTML by using built-in methods instead of navigating through the HTML code by hand.
+            </p>
+            <p class="step s2">
+                This DOM is accessible via the <a href="https://developer.mozilla.org/fr/docs/Web/API/Document" target="_blank">document</a> object. It contains many useful functions,
+                but for now we will focus on the ones allowing to search for a specific node.
+            </p>
+            <p class="step s3">
+                <span class="step s3">- To retrieve an HTML element given its id, use <span class="inlineCode">document.getElementById()</span><br></span>
+                <span class="step s4">- To retrieve an HTML element given one of its classes, use <span class="inlineCode">document.getElementsByClassName()</span><br></span>
+                <span class="step s5">- To retrieve an HTML element given its tag, use <span class="inlineCode">document.getElementsByTagName()</span><br></span>
+                <span class="step s6">- If you don't have just one attribute, you can use a full CSS selector <span class="inlineCode">document.querySelector()</span><br></span>
+                <small class="step s7">Note 1: getElementById and querySelector returns only 1 Node whereas the other methods return a list of all nodes corresponding to the criterium</small>
+                <small class="step s7">Note 2: If you want to retrieve all the elements corresponding to a given selector, you can use <span class="inlineCode">document.querySelectorAll()</span></small>
+            </p>
+        </article>
+    </section>
+
+    <section class="slide" id="page31">
+        <h1>JS</h1>
+        <article>
+            <h2>DOM</h2>
+            <p class="step s1">
+                The objects returned by the methods on the previous slide are of type <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element" target="_blank">Element</a>,
+                which contains many useful properties and methods to manipulate it.
+            </p>
+            <p class="step s2">
+                Properties:<br>
+                <span class="step s3">- <span class="inlineCode">Element.attributes</span> gives you the list of attributes assigned to the Element<br></span>
+                <span class="step s4">- <span class="inlineCode">Element.className</span> gives you the class of the Element<br></span>
+                <span class="step s5">- <span class="inlineCode">Element.id</span> gives you the id of the Element<br></span>
+                <span class="step s6">- <span class="inlineCode">Element.tagName</span> gives you the tag of the Element<br></span>
+                <span class="step s7">- <span class="inlineCode">Element.innerHTML</span> contains the entirety of the HTML contained in it.<br></span>
+                <small class="step s7">A fast way to remove all content from a node is to set innerHTML to an empty string: <span class="inlineCode">Element.innerHTML("");</span></small>
+            </p>
+            <p class="step s8">
+                Methods:<br>
+                <span class="step s9">- <span class="inlineCode">addEventListener()</span> but we will talk about it later<br></span>
+                <span class="step s10">- <span class="inlineCode">animate()</span> allows to create animation easily (slide changes in this page are made with animate).<br></span>
+                <span class="step s11">- <span class="inlineCode">append()</span> lets you add another Element as child of the current one.<br></span>
+                <span class="step s12">- <span class="inlineCode">getBoundingClientRect()</span> gives you the position of the Element relative to the viewport.<br></span>
+                <span class="step s13">- <span class="inlineCode">getElement(s)By*, querySelector*</span> applied not to the entire page but to the descendents of current Element.<br></span>
+            </p>
+        </article>
+    </section>
+
+    <section class="slide" id="page32">
+        <h1>JS</h1>
+        <article>
+            <h2>CSSOM</h2>
+            <p class="step s1">
+                The CSS Object Model follows more or less the same concept as the DOM (except its construction is way more complex): it creates a tree with all the styles applied to the Elements.
+            </p>
+            <p class="step s2">
+                To modify the CSS of an Element, first find it, and then change its style attribute:
+                <code class="step s3">
+                    HTML:<br>
+                    &lt;p id="myParagraph"&gt;Hello World&lt;/p&gt;<br><br>
+                    JS:<br>
+                    let elem = document.getElementById("myParagraph");<br>
+                    elem.style.color = "blue";<br>
+                </code>
+            </p>
+            <p class="step s4">
+                If the CSS property is usually written in kebab-case (background-color for instance), write it in camelCame inside the style attribute ("backgroundColor").
+            </p>
+        </article>
+    </section>
+
+    <section class="slide" id="page33">
+        <h1>JS</h1>
+        <article>
+            <h2>Events</h2>
+            <p class="step s1">
+                An important feature of JavaScript is to allow Event-oriented development, which means that instead of following a pre-defined flow, code can be executed as a
+                response to an event triggered by the user's actions.
+            </p>
+            <p class="step s2">
+                There are a lot of <a href="https://developer.mozilla.org/en-US/docs/Web/Events" target="_blank">Events</a> which can be triggered. The most often used are:<br>
+                <span class="step s3">- <span class="inlineCode">"load"</span> triggered when the whole page has loaded.<br></span>
+                <span class="step s4">- <span class="inlineCode">"mousemove"</span> triggered when the user moves the mouse.<br></span>
+                <span class="step s5">- <span class="inlineCode">"click"</span> triggered when the user clicks.<br></span>
+                <span class="step s6">- <span class="inlineCode">"keydown" or "keyup"</span> triggered when the user press (or release) a key from the keyboard.<br></span>
+            </p>
+
+            <code class="step s7">
+                <span class="codeComment">// To listen to an event, you need to call addEventListener() to an Element:</span>
+                let button = document.getElementsByTagName("button");<br>
+                button.addEventListener("click", function(event) { console.log("button has been clicked !") });
+            </code>
+            <p class="step s8">If you need to listen to the event everywhere on the page, you can use window.addEventListener()</p>
+        </article>
+    </section>
+
+    <section class="slide" id="page34">
+        <h1>JS</h1>
+        <article>
+            <h2>Cookies</h2>
+            <p class="step s1">
+                Before GDPR, cookies were an invisible tool used to optimize navigation by storing the users' preferences on their PC.<br>
+                Since GDPR, cookies are a visible constraining tool used to optimize navigation by storing the users' preferences on their PC.
+            </p>
+            <p class="step s2">
+                When a user leaves a website, the website looses all information about the actions the user performed on the front side.
+                Storing information on the user's PC is an easy way to remember what the user did so that everything can be configured as the user likes
+                for the next visit.
+            </p>
+
+            <p class="step s3">
+                There are 3 ways to store information on the user's PC: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie" target="_blank">Cookies</a>,
+                <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage" target="_blank">localStorage</a>,
+                and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage" target="_blank">sessionStorage</a>. GDPR regulations concerns the first 2
+                (sessionStorage is not concerned because as its name implies, stored information are destroyed when the user ends the session).
+            </p>
+
+            <p class="step s4">
+                We won't talk about sessionStorage as it manipulates exactly the same object as localStorage (same properties and methods).
+            </p>
+        </article>
+    </section>
+
+    <section class="slide" id="page35">
+        <h1>JS</h1>
+        <article>
+            <h2>Cookies vs localStorage</h2>
+            <p class="step s1">
+                The main difference between cookies and localStorage is that whenever the browser requests a page, cookies are automatically added to the HTTP request.
+                This means that you should use cookies only if the stored information will be used by your file server. If that's not the case, you should use
+                localStorage, which has more or less the same features but is not automatically sent.
+            </p>
+            <p class="step s2">
+                To create a cookie associated to the key "myKey", use document.cookie:<br>
+                <span class="inlineCode">document.cookie = "myKey=myValue; expires=Wed, 23 Sep 2022 23:59:59 UTC; path=/";</span><br>
+                Note that it is not a normal string, just a shortcut to write a cookie: if you overwrite document.cookie
+                (<span class="inlineCode">document.cookie = "myKey2=myValue2; expires=Wed, 23 Sep 2022 23:59:59 UTC; path=/";</span> for instance), the browser will just create another
+                cookie associated to the key "myKey2".<br>
+            </p>
+            <p class="step s3">
+                To delete the cookie associated to the key "foo", simply set its expiration date in the past:<br>
+                <span class="inlineCode">document.cookie = "foo=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";</span>
+            </p>
+        </article>
+    </section>
+
+    <section class="slide" id="page36">
+        <h1>JS</h1>
+        <article>
+            <h2>localStorage</h2>
+            <p class="step s1">
+                Localstorage is way easier to manipulate:<br>
+                <span class="step s2">- To store a key/value, use <span class="inlineCode">localStorage.setItem(key, value);</span>.<br></span>
+                <span class="step s3">- To retrieve value associated to a key, use <span class="inlineCode">localStorage.getItem(key);</span>.<br></span>
+                <span class="step s4">- To delete a key/value pair, use <span class="inlineCode">localStorage.removeItem(key);</span>.<br></span>
+                <span class="step s5">- To delete all key/value pairs, use <span class="inlineCode">localStorage.clear();</span>.<br></span>
+            </p>
+            <p class="step s6">
+                Storage works more or less like an object (or a dict), so you're not forced to use getItem and setItem, you can manipulate the storage like any other object
+                (localStorage.myKey = "myValue" for instance).
+            </p>
+            <p class="step s7">
+                localStorage is actually a property of window, but window's properties can be accessed without the need to use window.property. That being said, you CAN use it.
+            </p>
+            <p class="step s8">
+                You can only store strings in the localStorage. If you need to store any other object, you can use JSON.stringify(myObject) to get a string representation of that object,
+                and then use JSON.parse(myString) to get back the object.
+                <small>JSON (JavaScript Object Notation) is the most common way of describing objects in web (partly because JS converts it really easily).</small>
+            </p>
+        </article>
+    </section>
+
+    <!-- Script tags can take many specific attributes, you will mostly use async and defer. For a complete list, see:
+    https://developer.mozilla.org/fr/docs/Web/HTML/Element/script -->
+    <script>
+
+        /* ***********************************************
+        ***************** CONFIGURATION ******************
+        *********************************************** */
+
+        // Times are given in ms.
+        const pageTransitionTime = 500;
+        const stepTransitionTime = 200;
+        
+        /* ***********************************************
+        *************** GLOBAL VARIABLES *****************
+        *********************************************** */
+
+        // Never say that a variable, function or algorithm is self-explanatory. But hey, that's the current page number.
+        let currentPageNumber = 1;
+        // We can display multiple things in one slide, so let's add steps for that.
+        let currentStepNumber = 1;
+        // This boolean will be true during animations and used to not call multiple animations at the same time.
+        let animating = false;
+
+        /* ***********************************************
+        ******************* FUNCTIONS ********************
+        *********************************************** */
+
+        // Steps are animation within a page. This function aims at displaying every step until the given one (included).
+        function showStep(pageNumber, stepNumber) {
+            //debugger;
+            // Case 1: stepNumber is -1 in which case we need to display all the steps from the previous slide.
+            if (stepNumber === -1) {
+                showPage(pageNumber-1, -2);
+            // Case 2: stepNumber is too big (no element have this step), in which case we need to display next page.
+            } else if (stepNumber > 0 && !document.querySelector(`#page${pageNumber} .step.s${stepNumber}`)) {
+                showPage(pageNumber+1, 0);
+            } else {
+                //debugger;
+                // Case 3: stepNumber is in a correct range. In this case, let's display all the steps up to the current one.
+                // For simplicity matters, we will start by hiding all steps, and then show the ones we do not want.
+                for (let step of document.querySelectorAll(`#page${pageNumber} .step`)) {
+                    step.style.visibility = "hidden";
+                }
+
+
+                let selector;
+                let stepToReach = stepNumber;
+                // If stepNumber is -2, we are in a special case, and we need to find the highest state.
+                if (stepNumber === -2) {
+                    stepToReach = 0;
+                    selector = `#page${pageNumber} .step`;
+                    for (let element of document.querySelectorAll(selector)) {
+                        let currentStepNumber = element.classList[1].slice(1)*1;
+                        stepToReach = Math.max(stepToReach, currentStepNumber);
+                    }
+                }
+                /* The line below is a bit complex, let's take it bit by bit.
+                ** new Array(stepNumber) creates an Array of size stepNumber. But we cannot loop on this array because it is composed of only empty elements,
+                ** so we add .fill() we will transform the empty element in undefined element. The only interest of doing that is to have an array of size stepNumber
+                ** on which we can use the map function. First argument of map is the element (undefined) and the second is the current index (0,1,2..., stepNumber-1).
+                ** For each of those index, we return the selector retrieving the correspond steps. Finally, we join those selectors, separating them by a comma.
+                 */
+                selector = new Array(stepToReach).fill().map((e, i) => `#page${pageNumber} .step.s${i + 1}`).join(", ");
+                if (selector !== "") {
+                    let steps = document.querySelectorAll(selector);
+
+                    for (let stepToHide of steps) {
+                        stepToHide.style.visibility = "visible";
+                    }
+                }
+
+                currentStepNumber = stepToReach;
+
+
+                history.pushState({}, null, `?page=${pageNumber}&step=${currentStepNumber}`);
+            }
+        }
+
+        /* This function takes the page number to display (slides MUST have an id such as page#, eg. page2), and
+        ** animate the disappearance of the current page and the display of the targeted page. */
+        function showPage(nextPageNumber, stepToDisplay) {
+            // Going into this function will lead to an animation, so let's warn everyone.
+            animating = true;
+            // First retrieve the current page, so we can move it away.
+            let currentPage = document.getElementById(`page${currentPageNumber}`);
+            // Then retrieve the page which should be displayed.
+            let nextPage = document.getElementById(`page${nextPageNumber}`);
+
+            /* If the user tries to display a page that doesn't exist because the page# is too high or too low,
+            ** the script will instead display the current page, with an animation to show the user something happened. */
+            if (!nextPage) {
+                // To understand how animate works: https://developer.mozilla.org/fr/docs/Web/API/Element/animate
+                currentPage.animate([{
+                }, {
+                    transform: "rotateZ(360deg)"
+                }], pageTransitionTime).onfinish = function() {
+                    // Animation is finished, we can allow others now.
+                    animating = false;
+                };
+                return;
+            }
+
+            currentPage.style.zIndex = "1";
+            nextPage.style.zIndex = "2";
+
+            showStep(nextPageNumber, stepToDisplay || 0);
+
+            // By default, animations revert when finished, so don't forget to add the onfinish event to stabilize.
+            currentPage.animate([{
+                top: "0"
+            }, {
+                top: currentPageNumber < nextPageNumber ? "-100vh" : "100vh"
+            }], pageTransitionTime).onfinish = function() {
+                currentPage.style.top = "100vh";
+                // Animation is finished, we can allow others now.
+                animating = false;
+            };
+
+            nextPage.animate([{
+                top: currentPageNumber < nextPageNumber ? "100vh" : "-100vh"
+            }, {
+                top: "0"
+            }], pageTransitionTime).onfinish = function() {
+                nextPage.style.top = "0";
+                currentPageNumber = nextPageNumber;
+                // Animation is finished, we can allow others now.
+                animating = false;
+            };
+        }
+
+        /* ***********************************************
+        ******************** EVENTS **********************
+        *********************************************** */
+
+        /* This event is triggered when the entire dom has been loaded.
+        ** We will then check the URL to see if a page number has been given. */
+        window.addEventListener('load', function (event) {
+            // First, get the query (the part of the URL after the "?") if any.
+            const queryString = window.location.search;
+            // Then, connect it to the URLSearchParams interface (https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams).
+            const urlParams = new URLSearchParams(queryString);
+            // And search for a param called "page" (something like web.html?page=5).
+            const pageToDisplay = urlParams.get("page");
+            const stepToDisplay = urlParams.get("step");
+            // Then we will display the given page (after casting it in number) if any, or 1 by default.
+            showPage(pageToDisplay ? pageToDisplay*1 : 1, stepToDisplay ? stepToDisplay*1 : 0);
+        });
+
+        document.addEventListener('keydown', function(event){
+            // Stop the event if already animating something.
+            if (animating) return;
+            // Otherwise, check which key was pressed, and call the corresponding method.
+            switch (event.key) {
+                case "ArrowDown":
+                    showPage(currentPageNumber+1);
+                    break;
+                case "ArrowRight":
+                    showStep(currentPageNumber, currentStepNumber+1);
+                    break;
+                case "ArrowUp":
+                    showPage(currentPageNumber-1);
+                    break;
+                case "ArrowLeft":
+                    showStep(currentPageNumber, currentStepNumber-1);
+                    break;
+            }
+        });
+
+        /*document.addEventListener('mousedown', function(event){
+            // Stop the event if already animating something.
+            if (animating) return;
+            showStep(currentPageNumber, currentStepNumber+1);
+        });*/
+
+    </script>
+</body>
+</html>

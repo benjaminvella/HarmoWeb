@@ -302,8 +302,8 @@ language is specified in the <html> tag below, open this file in a decent browse
                     <li class="clickable" onclick="showPage(30)">DOM and CSSOM Manipulation</li>
                     <li class="clickable" onclick="showPage(33)">Events</li>
                     <li class="clickable" onclick="showPage(34)">Cookies</li>
-                    <li>Networking</li>
-                    <li>NodeJS</li>
+                    <li class="clickable" onclick="showPage(37)">Networking</li>
+                    <li class="clickable" onclick="showPage(41)">NodeJS</li>
                 </ul>
             </article>
         </nav>
@@ -1174,6 +1174,157 @@ language is specified in the <html> tag below, open this file in a decent browse
                 You can only store strings in the localStorage. If you need to store any other object, you can use JSON.stringify(myObject) to get a string representation of that object,
                 and then use JSON.parse(myString) to get back the object.
                 <small>JSON (JavaScript Object Notation) is the most common way of describing objects in web (partly because JS converts it really easily).</small>
+            </p>
+        </article>
+    </section>
+
+    <section class="slide" id="page37">
+        <h1>JS</h1>
+        <article>
+            <h2>Networking</h2>
+            <p class="step s1">
+                A lot of use cases require calling external servers:<br>
+                <span class="step s2">- Security and confidentiality (login, private messages, ...).<br></span>
+                <span class="step s3">- Codebase too heavy (millions of lines of code).<br></span>
+                <span class="step s4">- Processing too long on user's computer (image processing, IA, ...).<br></span>
+            </p>
+            <p class="step s5">
+                To call an external server, you need a URL to target, the port the server listens to, and which protocol to use (HTTP(s), FTP, SSH, ...).
+            </p>
+            <p class="step s6">
+                Most of the time, to communicate with a web application, the HTTP protocol will be used. There are many ways to create a server based on HTTP, but the easiest to manipulate
+                (and so the most used) is REST, which adds a layer to the requests (GET, POST, DELETE, ...).
+            </p>
+            <p class="step s7">
+                We will see 2 ways to communicate with a REST API in JS.
+            </p>
+        </article>
+    </section>
+
+    <section class="slide" id="page38">
+        <h1>JS</h1>
+        <article>
+            <h2>Networking - XMLHttpRequest</h2>
+            <p class="step s1">
+                Historically, <a href="https://developer.mozilla.org/fr/docs/Web/API/XMLHttpRequest" target="_blank">XMLHttpRequest</a> was used to call distant servers.
+                <code class="step s2">
+                    <span class="step s3">
+                        <span class="codeComment">// First, call the constructor.</span>
+                        let xhr = new XMLHttpRequest();
+                    </span>
+                    <span class="step s4">
+                        <span class="codeComment">// Then open a connection to a URL with the right method.</span>
+                        xhr.open('GET', 'myapiserver.com/login');
+                    </span>
+                    <span class="step s5">
+                        <span class="codeComment">// We can now send the request.</span>
+                        xhr.send();
+                    </span>
+                    <span class="step s6">
+                        <span class="codeComment">// Create a callback to be called when the response is received from the server.</span>
+                        xhr.onload = function() { }
+                    </span>
+                </code>
+            </p>
+            <p class="step s7">
+                Do not be mistaken by the name of the class, it is not used to request XML (it can, but it is more widely used).
+            </p>
+        </article>
+    </section>
+
+    <section class="slide" id="page39">
+        <h1>JS</h1>
+        <article>
+            <h2>Networking - Fetch</h2>
+            <p class="step s1">
+                More recently, another JS API has been developed to call external server: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch" target="_blank">Fetch</a>
+                <code class="step s2">
+                    <span class="step s3">
+                        <span class="codeComment">// To send GET request on the standard HTTP port, default values work well:</span>
+                        fetch('http://mywebsite.com/me')
+                    </span>
+                    <span class="step s4">
+                        <span class="codeComment">// Fetch returns a <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Promise" target="_blank">Promise</a></span>
+                        .then(function(response) {});
+                    </span>
+                    <span class="step s5">
+                        <span class="codeComment">// We can of course change the options if need be.</span>
+                        fetch('http://mywebsite.com/me', {<br>
+                            method: "POST",<br>
+                            headers: { 'Content-Type': "application/json" }<br>
+                            body: { JSON.stringify(data) }<br>
+                        }).then(function(data) {<br>
+                            console.log(data);<br>
+                        });
+                    </span>
+                </code>
+            </p>
+        </article>
+    </section>
+
+    <section class="slide" id="page40">
+        <h1>JS</h1>
+        <article>
+            <h2>Networking - Why 2 ?</h2>
+            <p class="step s1">
+                In most languages (may them be compiled or interpreted), there is an authority (official or not) responsible for building a tool so that the computers can execute the code.
+            </p>
+            <p class="step s2">
+                In HTML, CSS, and JS, it is a bit more complex: it is the browsers' responsibility to build their own Engines to transform HTML/CSS/JS in websites.
+            </p>
+            <p class="step s3">
+                But the visitors can use any of them, even the ones which are not up-to-date to the latest standards. That's why you may still see an old JS module being used even though a better
+                one has been created.
+            </p>
+            <p class="step s4">
+                To help us know what is implemented in which browser, a website exists: <a href="https://caniuse.com/" target="_blank">caniuse</a>.
+            </p>
+        </article>
+    </section>
+
+    <section class="slide" id="page41">
+        <h1>JS</h1>
+        <article>
+            <h2>NodeJs</h2>
+            <p class="step s1">
+                Executing JS on a browser works well, but is limited: you cannot access files or run commands outside the browser. Problem is: natively, Operating Systems have no tools to execute
+                JavaScript Code, because the JS engines are possessed in majority by browsers.
+            </p>
+            <p class="step s2">
+                That is where NodeJs enters. It is a CLI built over V8 (Google Chrome's JavaScript Engine). Thanks to its use of V8, NodeJs is able to execute JS code, and since it's not a browser,
+                it allows different features (to manipulate files on the computer for instance).
+            </p>
+            <p class="step s3">
+                We can create REST servers in many languages, and JS is part of the list. One of the main advantages is that having a JS server ease a lot communications since it's the same language
+                on both side of the call.
+            </p>
+        </article>
+    </section>
+
+    <section class="slide" id="page42">
+        <h1>JS</h1>
+        <article>
+            <h2>NodeJs - basic server</h2>
+            <p class="step s1">
+                NodeJS possess many modules (natively and non-native but free). Downloading a module is as easy as "npm install moduleName" ; add the module to a JS script is done in one line by
+                "const name = require(moduleName);", and then all the features of the module are available.
+            </p>
+            <p class="step s2">
+                To create a server using nodeJs, the base element is the http module, and its createserver method:
+                <code>
+                    const http = require('http');<br>
+                    http.createServer(function(request, response) {<br>
+                        ...<br>
+                    }).listen(8001);<br>
+                    <small>8001 can be replaced by any open port on the machine.</small>
+                </code>
+            </p>
+            <p class="step s3">
+                http.createServer method takes 1 argument: a callback, which is a function that will be called every time a request is received by the server.<br>
+                This callback function takes 2 arguments:<br>
+                - request, which contains all the information about the request (url, method, headers, ...).<br>
+                - response, which contains methods to send an information back to the client (<a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes" target="_blank">statusCode</a>,
+                setHeader() to add/update a header, end(body) to send back the request with the given body).
             </p>
         </article>
     </section>

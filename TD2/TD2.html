@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>JS - TD2</title>
+    <link rel="stylesheet" href="TD2.css">
+</head>
+<body>
+    <article id="exercises">
+        <h1>TD2</h1>
+        <p>
+            Files and data received by the user can be modified by the user. And the user can be a hacker searching for vulnerability.
+            ALWAYS consider (especially on the web) that some of your users will try and find every backdoor in your code.
+        </p>
+        <p>
+            In some cases (showcase websites for instance) everything is public and there are no confidential data whatsoever, so it's OK to put all the logic in the front-side.
+            But that's not always the case: for instance, I guess you wouldn't want your private conversations to be public and accessible to anyone pretending to be you.
+        </p>
+        <p>
+            To ensure only the authorized users access a content, we need to implement verifications in a code user cannot access. That's called the back-side (opposite to front-side),
+            and to allow the front-side to communicate securely to the back-side, <a href="https://en.wikipedia.org/wiki/API" target="_blank">APIs</a> are used.
+        </p>
+        <p>
+            In this lab, you will learn how to implement a basic sign-in/login platform.
+        </p>
+        <section>
+            <h2>Exercise 0 - Node.Js</h2>
+            <p>
+                A Server is a program listening to communications of a given port on the machine it is running on, and executing some code whenever a request is received.
+                We would like to create a server using JavaScript, but JS cannot be launched natively on computers (Operating Systems don't natively have the tools to understand and
+                execute JS): we need a program which containing a JS engine.
+            </p>
+            <p>
+                Please install <a href="https://nodejs.org/en/" target="_blank">Node.js</a>. It is a
+                <a href="https://en.wikipedia.org/wiki/Command-line_interface" target="_blank">Command-Line Interface (CLI)</a> using <a href="https://v8.dev/" target="_blank">V8</a>
+                (Google Chrome's JavaScript engine) to let users run JS directly on their machine.
+            </p>
+            <p>
+                To ensure the installation went smoothly, open a command prompt and type <span class="inlineCode">node -v</span>, you should see the node version you installed.
+            </p>
+        </section>
+        <section>
+            <h2>Exercise 1 - Server creation</h2>
+            <p>
+                The first step is to create a simple server which listens to HTTP requests of a given port and responds by sending back a text containing some information about the request.
+            </p>
+            <ul>
+                <li>
+                    Create a folder in TD2 called server.
+                </li>
+                <li>
+                    Open a command prompt, go to the server folder, and type <span class="inlineCode">npm init -y</span> (npm is Node Package Manager, the init command initializes a node project,
+                    and the -y argument says yes to all the questions npm is asking. If you want you can remove the -y parameter and answer the questions, but that's not the purpose of this exercise).
+                </li>
+                <li>
+                    Create, in the same folder, an <span class="inlineCode">index.js</span> file in which we will write the code for our server.
+                </li>
+                <li>
+                    Inside this file, call the http.createServer function and make your server listen to port 8765 (because why not). Don't forget to <span class="inlineCode">require</span>
+                    the necessary module.
+                </li>
+                <li>
+                    Set your response's <span class="inlineCode">statusCode</span> to 200, and add a header for 'Content-Type' whose value is 'text/html'. Send the response with a text indicating
+                    the method and the url of the request.
+                </li>
+                <li>
+                    Return to your command prompt and run the command <span class="inlineCode">node index.js</span> ;
+                    then open your browser and type in the URL <span class="inlineCode">localhost:8765</span> ; check that the message you sent from the server is correctly displayed in the browser.
+                </li>
+            </ul>
+        </section>
+        <section>
+            <h2>Exercise 2 - DB creation</h2>
+            <p>
+                As explained above, we cannot trust the client, so we need to save important data server-side. To do so, we need a database. For this lab we will use a simple SQL Database, sqlite3.
+            </p>
+            <ul>
+                <li>
+                    Go to your command prompt, in your server folder, and type <span class="inlineCode">npm install sqlite3</span>.
+                </li>
+                <li>
+                    In your index.js, "import" the sqlite3 module: <span class="inlineCode">const sqlite3 = require('sqlite3').verbose();</span>.
+                </li>
+                <li>
+                    Before the call to the <span class="inlineCode">createServer</span> function, define a variable <span class="inlineCode">db</span> and initialize it by calling
+                    <span class="inlineCode">sqlite3.Database</span> constructor. The first argument is the name of your db file (let put <span class="inlineCode">my.db</span>) ;
+                    the second argument is the opening mode, we will use <span class="inlineCode">sqlite3.OPEN_READWRITE</span>.
+                </li>
+                <li>
+                    If not given as argument on the db constructor, the default opening mode is <span class="inlineCode">sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE</span>.
+                    By removing <span class="inlineCode">sqlite3.OPEN_CREATE</span>, we ensured an error is thrown if the db doesn't exist.
+                    <span class="inlineCode">sqlite3.Database</span> constructor can take a third argument which is a callback function taking 1 argument: an error (or null if everything went well).
+                    Add this function to the constructor. It should check if an error has been given, and if so call the Database constructor with 2 arguments: the filename and the callback
+                    (in the callback, create a user table in the DB:
+                    <span class="inlineCode">db2.run('CREATE TABLE user(username TEXT NOT NULL UNIQUE, password TEXT NOT NULL, secretMessage TEXT)');</span>
+                    and put the newly created db in the <span class="inlineCode">db</span> variable.
+
+                </li>
+            </ul>
+            <p>
+                After that, your index.js should have a variable <span class="inlineCode">db</span> containing the currently opened db, either directly if it already existed or after being created
+                in the callback. Add console.log at each step, and run <span class="inlineCode">node index.js</span> in your command prompt. The first run, the callback of the first
+                constructor should have an error (since the db doesn't exist yet), but every other runs the db should be directly opened.
+            </p>
+        </section>
+        <section>
+            <h2>Exercise 3 - Sign-in</h2>
+            <p>
+                Now that the DB is running, we need to save information on it.
+            </p>
+            <ul>
+                <li>
+                    At the end of this page (TD2.html) you will find an article whose title is sign-in. Add 3 <span class="inlineCode">&lt;input&gt;</span> with 3 labels
+                    (username, password, and secret message) and a button called "Sign in".
+                </li>
+                <li>
+                    In TD2.js, add an event listener to this button, which should retrieve the content of all 3 inputs, and send a POST request to localhost:8765/signin containing those 3 fields.
+                </li>
+                <li>
+                    Optional: check that the inputs are not empty before sending the request. You can even force password to follow some rules
+                    (you can use <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions" target="_blank">Regular Expressions</a> to normalize what you expect).
+                </li>
+                <li>
+                    In the <span class="inlineCode">createServer</span> callback, remove the code from exercise 1, and instead check if the URL is a POST to /signin. If so:
+                    <ul>
+                        <li>
+                            Retrieve the username, password and secret message from the request
+                            (see how <a href="https://nodejs.dev/fr/learn/get-http-request-body-data-using-nodejs/" target="_blank">here</a>).
+                        </li>
+                        <li>
+                            Saving clear password in DB is a bad habit because if the db gets compromised for whatever reason, user's password would be directly visible. To avoid that,
+                            we can encrypt the password. For that, we will use SHA-256. First, install the module <span class="inlineCode">js-sha256</span>. Then, import it by adding
+                            <span class="inlineCode">const sha256 = require('js-sha256').sha256;</span> on top of the index.js file. Finally, store in a variable the hash of the password by using
+                            <span class="inlineCode">sha256(password);</span>.
+                        </li>
+                        <li>
+                            Insert the user's information in the database. You can find how to do that <a href="https://www.sqlitetutorial.net/sqlite-nodejs/insert/" target="_blank">here</a>.
+                            In the callback, send the response indicating if it worked (statusCode 201 CREATED ; if an error occurred, the returned code should depend on the error, so let's use
+                            <a href="https://en.wikipedia.org/wiki/Hyper_Text_Coffee_Pot_Control_Protocol" target="_blank">418 I'm a teapot</a>).
+                        </li>
+                        <li>
+                            Optional: before saving in the db the username/password, check if the username already exist, in which case update the password / secret message.
+                        </li>
+                        <li>
+                            Optional: in TD2.js, add a finish handler to the query to /signin and write a message in the console saying if the call went well or not.
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    Test your server by launching it (node index.js), filling the inputs in TD2.html and clicking the Sign in button. <br>
+                    You may have problems with Options and CORS. This is due to a policy about cross-origin requests and is supposed to reinforce security (see CORS for more info). To fix that,
+                    handle cases where the request is not a POST but an OPTION, and always add to your response the following headers:<br>
+                    <span class="inlineCode">response.setHeader("Access-Control-Allow-Origin", "*");</span><br>
+                    <span class="inlineCode">response.setHeader("Access-Control-Allow-Methods", ["GET", "POST", "PUT", "PATCH"]);</span><br>
+                    <span class="inlineCode">response.setHeader("Access-Control-Allow-Headers", "*");</span><br>
+                    NOTE: those values are totally unsafe and destroy all CORS principles. However, they allow any request to work immediately which is the focus in this lab.
+                </li>
+            </ul>
+        </section>
+        <section>
+            <h2>Exercise 4 - Connexion</h2>
+            <p>
+                Now that we can signin users, let's log them in.
+            </p>
+            <ul>
+                <li>
+                    In TD2.html, update the #login article to add username/password inputs and a "Log in" button.
+                </li>
+                <li>
+                    In TD2.js, add an event listener to the Log in button, and send a POST request to localhost:8765/login containing the 2 inputs.
+                </li>
+                <li>
+                    In index.js, add a check for POST requests to /login. In this case, run a SQL query to select the username of the user if the password match
+                    (<span class="inlineCode">db.get(`SELECT username FROM user WHERE username=? and password=?`, [data.username, data.password], function(error, result) {});</span>) :
+                    if an error occurs, return it ; Otherwise we now want to return an information that the front will be able to use to guarantee the user is logged in while being secure.
+                    For that, we will encrypt a token server-side, and send it to the client. Since the client cannot decrypt it, the server can ensure the content of the token is correct.
+                    To do that, we will use JWToken:
+                    <ul>
+                        <li>
+                            <span class="inlineCode">npm install jsonwebtoken</span>
+                        </li>
+                        <li>
+                            <span class="inlineCode">const jwt = require('jsonwebtoken');</span>
+                        </li>
+                        <li>
+                            In your index.js (outside every function, at the top of the file) define a variable secretCode containing a string of your choice.
+                        </li>
+                        <li>
+                            Update the login logic so that if the username/password are found in the db, the value sent in the response is the username but encrypted by JWT
+                            (you can use <span class="inlineCode">jwt.sign({username: username}, secretCode, {expiresIn: "1d"});</span> to do so).
+                        </li>
+                        <li>
+
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+        <section>
+            <h2>Exercise 4 - Connexion</h2>
+            <p>
+                Now that we can signin users, let's log them in.
+            </p>
+            <ul>
+                <li>
+                    In TD2.html, update the #login article to add username/password inputs and a "Log in" button.
+                </li>
+                <li>
+                    In TD2.js, add an event listener to the Log in button, and send a POST request to localhost:8765/login containing the 2 inputs.
+                </li>
+                <li>
+                    In index.js, add a check for POST requests to /login. In this case, run a SQL query to select the username of the user if the password match
+                    (<span class="inlineCode">db.get(`SELECT username FROM user WHERE username=? and password=?`, [data.username, data.password], function(error, result) {});</span>) :
+                    if an error occurs, return it ; Otherwise we now want to return an information that the front will be able to use to guarantee the user is logged in while being secure.
+                    For that, we will encrypt a token server-side, and send it to the client. Since the client cannot decrypt it, the server can ensure the content of the token is correct.
+                    To do that, we will use JWToken:
+                    <ul>
+                        <li>
+                            <span class="inlineCode">npm install jsonwebtoken</span>
+                        </li>
+                        <li>
+                            <span class="inlineCode">const jwt = require('jsonwebtoken');</span>
+                        </li>
+                        <li>
+                            In your index.js (outside every function, at the top of the file) define a variable secretCode containing a string of your choice.
+                        </li>
+                        <li>
+                            Update the login logic so that if the username/password are found in the db, the value sent in the response is the username but encrypted by JWT
+                            (you can use <span class="inlineCode">jwt.sign({username: username}, secretCode, {expiresIn: "1d"});</span> to do so).
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+        <section>
+            <h2>Exercise 5 - Retrieve confidential information</h2>
+            <p>
+                Now the goal is to create a button which will send a request to localhost:8765/getMesssage, sending the token, and the API will have to decrypt the token (using jwt.verify),
+                get the username from the token, get from the db the message associated to the right user, and send that message back in response to the request. No step-by-step guide,
+                you know how to do everything !
+            </p>
+
+        </section>
+    </article>
+    <article id="signin">
+        <h1>Sign-in</h1>
+    </article>
+    <article id="login">
+        <h1>Login</h1>
+    </article>
+    <script type="application/javascript" src="TD2.js" defer></script>
+</body>
+</html>

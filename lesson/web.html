@@ -260,7 +260,7 @@ language is specified in the <html> tag below, open this file in a decent browse
 <body>
     <button id="goToMenu" onclick="showPage(2)">MENU</button>
 
-    <section class="slide" id="page1">
+    <section class="slide">
         <h1>HTML, CSS, JS</h1>
         <article>
             <h2>Link to the course and TDs</h2>
@@ -270,23 +270,17 @@ language is specified in the <html> tag below, open this file in a decent browse
         </article>
     </section>
 
-    <section class="slide" id="page2">
+    <section class="slide">
         <h1>Content</h1>
         <nav>
             <article>
                 <h2>HTML</h2>
-                <ul>
-                    <li class="clickable" onclick="showPage(3)">Introduction</li>
-                    <li class="clickable" onclick="showPage(5)">Markup syntax</li>
-                    <li class="clickable" onclick="showPage(6)">HTML5 Structure</li>
+                <ul id="HTMLMenuContainer">
                 </ul>
             </article>
             <article>
                 <h2>CSS</h2>
-                <ul>
-                    <li class="clickable" onclick="showPage(12)">Introduction</li>
-                    <li class="clickable" onclick="showPage(13)">Syntax</li>
-                    <li class="clickable" onclick="showPage(14)">Selectors</li>
+                <ul id="CSSMenuContainer">
                     <li>Dimensions</li> <!--(margin padding width height border-box)-->
                     <li>Positioning</li> <!--(fixed, absolute, relative)-->
                     <li>Display Flex</li>
@@ -296,20 +290,13 @@ language is specified in the <html> tag below, open this file in a decent browse
             </article>
             <article>
                 <h2>JS</h2>
-                <ul>
-                    <li class="clickable" onclick="showPage(22)">Introduction</li>
-                    <li class="clickable" onclick="showPage(23)">Syntax</li>
-                    <li class="clickable" onclick="showPage(30)">DOM and CSSOM Manipulation</li>
-                    <li class="clickable" onclick="showPage(33)">Events</li>
-                    <li class="clickable" onclick="showPage(34)">Cookies</li>
-                    <li class="clickable" onclick="showPage(37)">Networking</li>
-                    <li class="clickable" onclick="showPage(41)">NodeJS</li>
+                <ul id="JSMenuContainer">
                 </ul>
             </article>
         </nav>
     </section>
 
-    <section class="slide" id="page3">
+    <section class="slide" data-menu-category="HTML" data-menu-name="Introduction">
         <h1>HTML</h1>
         <article>
             <h2>Introduction</h2>
@@ -321,7 +308,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </article>
     </section>
 
-    <section class="slide mainAndSide" id="page4">
+    <section class="slide mainAndSide">
         <h1>HTML</h1>
         <main>
             <h2>HTML5</h2>
@@ -332,11 +319,26 @@ language is specified in the <html> tag below, open this file in a decent browse
             <p class="step s1">The last major revision of HTML - HTML5 - focus on semantics: it adds tags which have a meaning, so that machines (and humans) can easily understand what the content represents.</p>
         </main>
         <aside>
-            <img src="img/html45.webp" alt="Example of a page layout in HTML4 and HTML5" class="step s2">
+            <span class="step s2">HTML4:</span>
+            <code class="step s2">
+                &lt;div&gt;Header with logo and login stuff&lt;/div&gt;<br>
+                &lt;div&gt;Navigation bar&lt;/div&gt;<br>
+                &lt;div&gt;Main content&lt;/div&gt;<br>
+                &lt;div&gt;Bloc on the side&lt;/div&gt;<br>
+                &lt;div&gt;Footer information&lt;/div&gt;<br>
+            </code><br>
+            <span class="step s3">HTML5:</span>
+            <code class="step s3">
+                &lt;header&gt;Header with logo and login stuff&lt;/header&gt;<br>
+                &lt;nav&gt;Navigation bar&lt;/nav&gt;<br>
+                &lt;main&gt;Main content&lt;/main&gt;<br>
+                &lt;aside&gt;Bloc on the side&lt;/aside&gt;<br>
+                &lt;footer&gt;Footer information&lt;/footer&gt;<br>
+            </code>
         </aside>
     </section>
 
-    <section class="slide" id="page5">
+    <section class="slide" data-menu-category="HTML" data-menu-name="Markup Syntax">
         <h1>HTML</h1>
         <article>
             <h2>Markup syntax</h2>
@@ -366,10 +368,10 @@ language is specified in the <html> tag below, open this file in a decent browse
         </article>
     </section>
 
-    <section class="slide mainAndSide" id="page6">
+    <section class="slide mainAndSide" data-menu-category="HTML" data-menu-name="HTML5 Structure">
         <h1>HTML</h1>
         <main>
-            <h2>HTML Structure</h2>
+            <h2>HTML5 Structure</h2>
             <p class="step s1">To create an HTML5 page, you need to declare a given <span class="inlineCode">doctype</span>. After that you can start the page markup tree.</p>
             <p class="step s2">Everything should be encapsulated in a <span class="inlineCode">html</span> tag having a lang attribute.</p>
             <p class="step s3">Inside the html tag, only 2 possible tags: <span class="inlineCode">&lt;head&gt;</span> and <span class="inlineCode">&lt;body&gt;</span>.</p>
@@ -391,7 +393,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </aside>
     </section>
 
-    <section class="slide mainAndSide" id="page7">
+    <section class="slide mainAndSide">
         <h1>HTML</h1>
         <main>
             <h2>HTML5 Structure - head</h2>
@@ -424,7 +426,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </aside>
     </section>
 
-    <section class="slide mainAndSide" id="page8">
+    <section class="slide mainAndSide">
         <h1>HTML</h1>
         <main>
             <h2>HTML5 Structure - head</h2>
@@ -462,7 +464,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </aside>
     </section>
 
-    <section class="slide" id="page9">
+    <section class="slide">
         <h1>HTML</h1>
         <article>
             <h2>HTML5 Structure - body</h2>
@@ -482,7 +484,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </article>
     </section>
 
-    <section class="slide" id="page10">
+    <section class="slide">
         <h1>HTML</h1>
         <article>
             <h2>HTML5 Structure - body</h2>
@@ -509,12 +511,12 @@ language is specified in the <html> tag below, open this file in a decent browse
         </article>
     </section>
 
-    <section class="slide" id="page11">
+    <section class="slide">
         <h1>HMTL, CSS, JS</h1>
         <h2>CSS part</h2>
     </section>
 
-    <section class="slide" id="page12">
+    <section class="slide" data-menu-category="CSS" data-menu-name="Introduction">
         <h1>CSS</h1>
         <article>
             <h2>CSS - Introduction</h2>
@@ -524,7 +526,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </article>
     </section>
 
-    <section class="slide" id="page13">
+    <section class="slide" data-menu-category="CSS" data-menu-name="Syntax">
         <h1>CSS</h1>
         <article>
             <h2>CSS - Syntax</h2>
@@ -547,7 +549,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </article>
     </section>
 
-    <section class="slide mainAndSide" id="page14">
+    <section class="slide mainAndSide" data-menu-category="CSS" data-menu-name="Selectors">
         <h1>CSS</h1>
         <main>
             <h2>CSS - Selectors</h2>
@@ -572,7 +574,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </aside>
     </section>
 
-    <section class="slide mainAndSide" id="page15">
+    <section class="slide mainAndSide">
         <h1>CSS</h1>
         <main>
             <h2>CSS - Selectors</h2>
@@ -601,7 +603,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </aside>
     </section>
 
-    <section class="slide mainAndSide" id="page16">
+    <section class="slide mainAndSide">
         <h1>CSS</h1>
         <main>
             <h2>CSS - Selectors</h2>
@@ -628,7 +630,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </aside>
     </section>
 
-    <section class="slide mainAndSide" id="page17">
+    <section class="slide mainAndSide">
         <h1>CSS</h1>
         <main>
             <h2>CSS - Selectors</h2>
@@ -655,7 +657,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </aside>
     </section>
 
-    <section class="slide mainAndSide" id="page18">
+    <section class="slide mainAndSide">
         <h1>CSS</h1>
         <main>
             <h2>CSS - Selectors</h2>
@@ -683,7 +685,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </aside>
     </section>
 
-    <section class="slide" id="page19">
+    <section class="slide">
         <h1>CSS</h1>
         <article>
             <h2>CSS - Priority</h2>
@@ -703,7 +705,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </article>
     </section>
 
-    <section class="slide mainAndSide" id="page20">
+    <section class="slide mainAndSide">
         <h1>CSS</h1>
         <main>
             <h2>CSS - Priority</h2>
@@ -736,12 +738,12 @@ language is specified in the <html> tag below, open this file in a decent browse
         </aside>
     </section>
 
-    <section class="slide" id="page21">
+    <section class="slide">
         <h1>HMTL, CSS, JS</h1>
         <h2>JS part</h2>
     </section>
 
-    <section class="slide" id="page22">
+    <section class="slide" data-menu-category="JS" data-menu-name="Introduction">
         <h1>JS</h1>
         <article>
             <h2>Introduction</h2>
@@ -758,7 +760,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </article>
     </section>
 
-    <section class="slide" id="page23">
+    <section class="slide" data-menu-category="JS" data-menu-name="Syntax">
         <h1>JS</h1>
         <article>
             <h2>Syntax - Variables</h2>
@@ -779,7 +781,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </article>
     </section>
 
-    <section class="slide" id="page24">
+    <section class="slide">
         <h1>JS</h1>
         <article>
             <h2>Syntax - Array</h2>
@@ -824,7 +826,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </article>
     </section>
 
-    <section class="slide" id="page25">
+    <section class="slide">
         <h1>JS</h1>
         <article>
             <h2>Syntax - Dict</h2>
@@ -857,7 +859,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </article>
     </section>
 
-    <section class="slide" id="page26">
+    <section class="slide">
         <h1>JS</h1>
         <article>
             <h2>Syntax - Function as Function</h2>
@@ -890,7 +892,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </article>
     </section>
 
-    <section class="slide" id="page27">
+    <section class="slide">
         <h1>JS</h1>
         <article>
             <h2>Syntax - Function as Class</h2>
@@ -928,7 +930,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </article>
     </section>
 
-    <section class="slide" id="page28">
+    <section class="slide">
         <h1>JS</h1>
         <article>
             <h2>Syntax - Conditions</h2>
@@ -963,7 +965,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </article>
     </section>
 
-    <section class="slide" id="page29">
+    <section class="slide">
         <h1>JS</h1>
         <article>
             <h2>Syntax - Looping</h2>
@@ -1003,7 +1005,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </article>
     </section>
 
-    <section class="slide" id="page30">
+    <section class="slide" data-menu-category="JS" data-menu-name="DOM and CSSOM">
         <h1>JS</h1>
         <article>
             <h2>DOM</h2>
@@ -1026,7 +1028,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </article>
     </section>
 
-    <section class="slide" id="page31">
+    <section class="slide">
         <h1>JS</h1>
         <article>
             <h2>DOM</h2>
@@ -1054,7 +1056,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </article>
     </section>
 
-    <section class="slide" id="page32">
+    <section class="slide">
         <h1>JS</h1>
         <article>
             <h2>CSSOM</h2>
@@ -1077,7 +1079,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </article>
     </section>
 
-    <section class="slide" id="page33">
+    <section class="slide" data-menu-category="JS" data-menu-name="Events">
         <h1>JS</h1>
         <article>
             <h2>Events</h2>
@@ -1102,7 +1104,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </article>
     </section>
 
-    <section class="slide" id="page34">
+    <section class="slide" data-menu-category="JS" data-menu-name="Cookies">
         <h1>JS</h1>
         <article>
             <h2>Cookies</h2>
@@ -1129,7 +1131,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </article>
     </section>
 
-    <section class="slide" id="page35">
+    <section class="slide">
         <h1>JS</h1>
         <article>
             <h2>Cookies vs localStorage</h2>
@@ -1152,7 +1154,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </article>
     </section>
 
-    <section class="slide" id="page36">
+    <section class="slide">
         <h1>JS</h1>
         <article>
             <h2>localStorage</h2>
@@ -1178,7 +1180,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </article>
     </section>
 
-    <section class="slide" id="page37">
+    <section class="slide" data-menu-category="JS" data-menu-name="Networking">
         <h1>JS</h1>
         <article>
             <h2>Networking</h2>
@@ -1201,7 +1203,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </article>
     </section>
 
-    <section class="slide" id="page38">
+    <section class="slide">
         <h1>JS</h1>
         <article>
             <h2>Networking - XMLHttpRequest</h2>
@@ -1232,7 +1234,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </article>
     </section>
 
-    <section class="slide" id="page39">
+    <section class="slide">
         <h1>JS</h1>
         <article>
             <h2>Networking - Fetch</h2>
@@ -1240,7 +1242,7 @@ language is specified in the <html> tag below, open this file in a decent browse
                 More recently, another JS API has been developed to call external server: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch" target="_blank">Fetch</a>
                 <code class="step s2">
                     <span class="step s3">
-                        <span class="codeComment">// To send GET request on the standard HTTP port, default values work well:</span>
+                        <span class="codeComment">// To send GET request on the standard HTTP port (80), default values work well:</span>
                         fetch('http://mywebsite.com/me')
                     </span>
                     <span class="step s4">
@@ -1262,7 +1264,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </article>
     </section>
 
-    <section class="slide" id="page40">
+    <section class="slide">
         <h1>JS</h1>
         <article>
             <h2>Networking - Why 2 ?</h2>
@@ -1273,16 +1275,19 @@ language is specified in the <html> tag below, open this file in a decent browse
                 In HTML, CSS, and JS, it is a bit more complex: it is the browsers' responsibility to build their own Engines to transform HTML/CSS/JS in websites.
             </p>
             <p class="step s3">
-                But the visitors can use any of them, even the ones which are not up-to-date to the latest standards. That's why you may still see an old JS module being used even though a better
+                The visitors can use any of them, even the ones which are not up-to-date to the latest standards. That's why you may still see an old JS module being used even though a better
                 one has been created.
             </p>
             <p class="step s4">
                 To help us know what is implemented in which browser, a website exists: <a href="https://caniuse.com/" target="_blank">caniuse</a>.
             </p>
+            <p class="step s5">
+                NB: Transpilers (such as <a href="https://babeljs.io/" target="_blank">Babel</a>) are capable of converting EcmaScript's latest standards in classic JS working on all browsers.
+            </p>
         </article>
     </section>
 
-    <section class="slide" id="page41">
+    <section class="slide" data-menu-category="JS" data-menu-name="NodeJS (in progress)">
         <h1>JS</h1>
         <article>
             <h2>NodeJs</h2>
@@ -1301,7 +1306,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </article>
     </section>
 
-    <section class="slide" id="page42">
+    <section class="slide">
         <h1>JS</h1>
         <article>
             <h2>NodeJs - basic server</h2>
@@ -1355,6 +1360,38 @@ language is specified in the <html> tag below, open this file in a decent browse
         /* ***********************************************
         ******************* FUNCTIONS ********************
         *********************************************** */
+
+        // This function prepares the DOM before starting manipulating it.
+        function initPage() {
+            // Add page# as id of each slide, so we can select them easily.
+            let slides = document.getElementsByClassName("slide");
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].id = `page${i + 1}`;
+            }
+
+            // Setup the menu
+            addMenuItems("HTMLMenuContainer", document.querySelectorAll("[data-menu-category=HTML]"));
+            addMenuItems("CSSMenuContainer", document.querySelectorAll("[data-menu-category=CSS]"));
+            addMenuItems("JSMenuContainer", document.querySelectorAll("[data-menu-category=JS]"));
+        }
+
+        // Creates <li> element for each of the given items, and append them to the given container.
+        function addMenuItems(containerId, items) {
+            let container = document.getElementById(containerId);
+
+            for (let slide of items) {
+                // Create the <li>
+                let li = document.createElement("li");
+                // Add the onclick event to change page when menu item is clicked.
+                li.setAttribute("onclick", `showPage(${slide.id.slice(4)});`);
+                // Add a class for CSS.
+                li.classList.add("clickable");
+                // Add the text content which has been set in the data-menu-name attribute.
+                li.appendChild(document.createTextNode(slide.dataset.menuName));
+                // And finally append the li to the HTML
+                container.appendChild(li);
+            }
+        }
 
         // Steps are animation within a page. This function aims at displaying every step until the given one (included).
         function showStep(pageNumber, stepNumber) {
@@ -1466,6 +1503,8 @@ language is specified in the <html> tag below, open this file in a decent browse
         /* This event is triggered when the entire dom has been loaded.
         ** We will then check the URL to see if a page number has been given. */
         window.addEventListener('load', function (event) {
+            // Before anything, prepare the page.
+            initPage();
             // First, get the query (the part of the URL after the "?") if any.
             const queryString = window.location.search;
             // Then, connect it to the URLSearchParams interface (https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams).

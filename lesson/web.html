@@ -266,7 +266,11 @@ language is specified in the <html> tag below, open this file in a decent browse
             <h2>Link to the course and TDs</h2>
             <p>This lesson plus the TD can be found at: https://github.com/benjaminvella/HarmoWeb</p>
             <p>If you know how to use Git, clone the repo.</p>
-            <p>If you don't, click Code --> "Download ZIP".</p>
+            <p>If you don't, click "Code" --> "Download ZIP".</p><br>
+            <p>
+                Also, keep in mind that this lesson has been written in HTML, CSS, and JS, so if you need example about something explained in the slides, simply open this file
+                in an editor and read it, I used most of what is taught in this course to build the slides (and the code is commented).
+            </p>
         </article>
     </section>
 
@@ -281,11 +285,6 @@ language is specified in the <html> tag below, open this file in a decent browse
             <article>
                 <h2>CSS</h2>
                 <ul id="CSSMenuContainer">
-                    <li>Dimensions</li> <!--(margin padding width height border-box)-->
-                    <li>Positioning</li> <!--(fixed, absolute, relative)-->
-                    <li>Display Flex</li>
-                    <li>Display Grid</li>
-                    <li>Transitions</li>
                 </ul>
             </article>
             <article>
@@ -316,7 +315,8 @@ language is specified in the <html> tag below, open this file in a decent browse
                 HTML has evolved throughout the years to match the needs of the society, from a way to share data with a few people
                 to the main information hub and selling/buying platform for billions of people around the world.
             </p>
-            <p class="step s1">The last major revision of HTML - HTML5 - focus on semantics: it adds tags which have a meaning, so that machines (and humans) can easily understand what the content represents.</p>
+            <p class="step s1">The last major revision of HTML - HTML5 - focus on semantics: it adds tags which have a meaning,
+                so that machines (and humans) can easily understand what the content represents.</p>
         </main>
         <aside>
             <span class="step s2">HTML4:</span>
@@ -502,12 +502,65 @@ language is specified in the <html> tag below, open this file in a decent browse
                 </code>
             </p>
             <p class="step s3">
-                Plenty of other tags exist. For instance, in this page <span class="inlineCode">&lt;code&gt;</span> have been used to display lines of code, <span class="inlineCode">&lt;small&gt;</span>
-                to add small notes below a content, and <span class="inlineCode">&lt;a&gt;</span> for links. An exhaustive list can be found
+                Plenty of other tags exist. For instance, in this page <span class="inlineCode">&lt;code&gt;</span> have been used to display lines of code,
+                <span class="inlineCode">&lt;small&gt;</span> to add small notes below a content, and <span class="inlineCode">&lt;a&gt;</span> for links. An exhaustive list can be found
                 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element" target="_blank">here</a>.<br>
                 Sometimes, meaningless tags are required for layout or styling purposes. In this case, <span class="inlineCode">&lt;div&gt;</span> and
                 <span class="inlineCode">&lt;span&gt;</span> are the default "block" and "inline" tags (see CSS parts for more info on that).
             </p>
+        </article>
+    </section>
+
+    <section class="slide" data-menu-category="HTML" data-menu-name="Common HTML tags">
+        <h1>HTML</h1>
+        <article>
+            <h2>Common HTML tags</h2>
+            <code>
+                <span class="step s1 codeComment">&lt;!-- div and span are respectively the standard bloc and inline elements. They do not bear any meaning. --&gt;</span>
+                <span class="step s1">&lt;div&gt; &lt;span&gt;Random text&lt;/span&gt; &lt;/div&gt;</span><br><br>
+
+                <span class="step s2 codeComment">&lt;!-- A paragraph is represented by the p tag. --&gt;</span>
+                <span class="step s2">&lt;p&gt;Lorem Ipsum Dolor Sit Amet...&lt;/p&gt;</span><br><br>
+
+                <span class="step s3 codeComment">&lt;!-- Links use the href attribute to define their target.
+                    It can be a URL, a phone number, a mail, as long as the href's value is correct, it will work.
+                    If you want the link to open in a new tab, you can add the attribute: target="_blank". --&gt;</span>
+                <span class="step s3">&lt;a href="tel:+33836656565"&gt;Click to call Santa in France (in the 90's at least)&lt;/a&gt;</span>
+                <small class="step s3">Reference can be find <a href="https://www.youtube.com/watch?v=ONTVUomrRik" target="_blank">here</a>.</small><br>
+
+                <span class="step s4 codeComment">&lt;!-- Titles are usually represented by a h[1-4] tag. --&gt;</span>
+                <span class="step s4">&lt;h1&gt;Title&lt;/h1&gt;</span><br>
+                <span class="step s4">&lt;h2&gt;Sub-title&lt;/h2&gt;</span><br>
+                <span class="step s4">&lt;h3&gt;Sub-sub-title&lt;/h3&gt;</span><br>
+                <span class="step s4">&lt;h4&gt;Sub-sub-sub-title&lt;/h4&gt;</span>
+            </code>
+        </article>
+    </section>
+
+    <section class="slide">
+        <h1>HTML</h1>
+        <article>
+            <h2>Common HTML tags</h2>
+            <code>
+                <span class="step s1 codeComment">&lt;!-- image elements must have an alt attribute which will be displayed if the image doesn't load,
+                    and an src attribute containing the URL of the image (the URL can be relative to the current page). --&gt;</span>
+                <span class="step s1">&lt;img src="path/to/the/image.webp" alt="text describing the image"&gt;</span><br><br>
+
+                <span class="step s2 codeComment">&lt;!-- For a video, you need the src attribute to link to the video, and you can add the "controls" attribute if you want
+                    play/stop and fullscreen buttons to be automatically added. Also, the content of the tag must be the text to display if the video doesn't load. --&gt;</span>
+                <span class="step s2">&lt;video controls src="path/to/the/video.mp4"&gt;Video is about blah blah blah&lt;/video&gt;</span><br><br>
+
+                <span class="step s3 codeComment">&lt;!-- An iFrame allows to load another HTML page / website inside your page. The only required property is src,
+                    linking to the HTML page to load, but there are many other properties that can be set to handle the iframe, you can find them
+                    <a href="https://fr.w3docs.com/apprendre-html/html-tag-iframe.html" target="_blank">here</a> --&gt;</span>
+                <span class="step s3">&lt;iframe src="google.com"&gt;&lt;/iframe&gt;</span><br><br>
+
+                <span class="step s4 codeComment">&lt;!-- Canvas allows drawing, but the APIs are way too complex to be defined in this guide. If you want to know more,
+                    you can start by <a href="https://developer.mozilla.org/fr/docs/Web/HTML/Element/canvas" target="_blank">the documentation</a>
+                    and/or find tutorials online. For now, know that canvas require a width and height, and that the content of the tag in a message in case the browser cannot display
+                    the canvas. All the drawing is actually done in JavaScript (... unless you want to draw in 3D, but that's another story). --&gt;</span>
+                <span class="step s4">&lt;canvas width="600px" height="800px"&gt;Sorry, your browser cannot display canvas.&lt;/canvas&gt;</span><br><br>
+            </code>
         </article>
     </section>
 
@@ -643,7 +696,7 @@ language is specified in the <html> tag below, open this file in a decent browse
             <p class="step s2">
                 5bis) Is a child of <span class="inlineCode">&lt;article&gt;</span>. In CSS we can select a child by using &gt;:
                 <span class="inlineCode">article &gt; div {color: blue;}</span>
-                <small>Note that this would also select the green div because it is also a descendant of article.</small>
+                <small>Note that this would also select the green div because it is also a child of article.</small>
             </p>
         </main>
         <aside>
@@ -668,7 +721,7 @@ language is specified in the <html> tag below, open this file in a decent browse
             </p>
             <p class="step s2">
                 For instance, the pseudo class <span class="inlineCode">:nth-child(k)</span> selects elements which are the kth children of their parents.
-                In our example, the red div is the second child of its parent (first is h1, third is the red div), so we could use:
+                In our example, the red div is the second child of its parent (first is h1, third is the green div), so we could use:
                 <code>
                     div:nth-child(2) {color: blue;}
                 </code>
@@ -685,7 +738,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </aside>
     </section>
 
-    <section class="slide">
+    <section class="slide" data-menu-category="CSS" data-menu-name="Rules priority">
         <h1>CSS</h1>
         <article>
             <h2>CSS - Priority</h2>
@@ -736,6 +789,346 @@ language is specified in the <html> tag below, open this file in a decent browse
             Result:
                 <span id="cssPrioResult1">Content</span>
         </aside>
+    </section>
+
+    <section class="slide mainAndSide" data-menu-category="CSS" data-menu-name="Dimensions">
+        <h1>CSS</h1>
+        <main>
+            <h2>CSS - Dimensions</h2>
+            <p>
+                Let's consider the image below. In this image, we will focus on the dimensions of the RED rectangle. The blue one is its parent (the container) and the green one is the content
+                (its child).
+            </p>
+            <p>
+                <svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+                    <g>
+                        <title>Layer 1</title>
+                        <rect stroke-width="40" stroke="#00007f" id="svg_2" height="590.99999" width="786.00003" y="4.5" x="7" fill="none"/>
+                        <rect stroke="#bf0000" id="svg_3" height="385.99999" width="600" y="107" x="100" stroke-width="30" fill="none"/>
+                        <rect id="svg_4" height="207" width="460" y="196.5" x="170" stroke-width="20" stroke="#00bf00" fill="none"/>
+                        <line id="svg_5" y2="92" x2="211" y1="25" x1="210" stroke-width="5" stroke="#ff7f00" fill="none"/>
+                        <line transform="rotate(-26 203.5 36.5)" stroke="#ff7f00" id="svg_6" y2="30.30955" x2="213.61728" y1="42.69045" x1="193.38273" stroke-width="5" fill="none"/>
+                        <line transform="rotate(-26 203.5 36.5)" stroke="#ff7f00" id="svg_7" y2="30.30955" x2="213.61728" y1="42.69045" x1="193.38273" stroke-width="5" fill="none"/>
+                        <line id="svg_8" y2="26" x2="212" y1="44" x1="229" stroke-width="5" stroke="#ff7f00" fill="none"/>
+                        <line id="svg_10" y2="91" x2="210" y1="76" x1="195" stroke-width="5" stroke="#ff7f00" fill="none"/>
+                        <line id="svg_11" y2="89" x2="211" y1="74" x1="228" stroke-width="5" stroke="#ff7f00" fill="none"/>
+                        <line id="svg_14" y2="184" x2="321" y1="123" x1="321" stroke-width="5" stroke="#ff00ff" fill="none"/>
+                        <line id="svg_15" y2="185" x2="321" y1="165" x1="339" stroke-width="5" stroke="#ff00ff" fill="none"/>
+                        <line id="svg_16" y2="183" x2="320" y1="170" x1="301" stroke-width="5" stroke="#ff00ff" fill="none"/>
+                        <line id="svg_17" y2="124" x2="321" y1="134" x1="307" stroke-width="5" stroke="#ff00ff" fill="none"/>
+                        <line id="svg_18" y2="122" x2="322" y1="135" x1="345" stroke-width="5" stroke="#ff00ff" fill="none"/>
+                        <line id="svg_19" y2="120" x2="467" y1="92" x1="466" stroke-width="5" stroke="#ffff00" fill="none"/>
+                        <line id="svg_20" y2="120" x2="467" y1="107" x1="487" stroke-width="5" stroke="#ffff00" fill="none"/>
+                        <line transform="rotate(11.9908 459.5 115.5)" id="svg_21" y2="120" x2="467" y1="111" x1="452" stroke-width="5" stroke="#ffff00" fill="none"/>
+                        <line id="svg_23" y2="92" x2="464" y1="98" x1="480" stroke-width="5" stroke="#ffff00" fill="none"/>
+                        <line transform="rotate(-34.6064 459.5 97)" id="svg_24" y2="95" x2="467" y1="99" x1="452" stroke-width="5" stroke="#ffff00" fill="none"/>
+                        <line id="svg_25" y2="254" x2="684" y1="254" x1="116" stroke-width="5" stroke="#56ffff" fill="none"/>
+                        <line id="svg_26" y2="255" x2="686" y1="229" x1="662" stroke-width="5" stroke="#56ffff" fill="none"/>
+                        <line id="svg_27" y2="256" x2="685" y1="276" x1="665" stroke-width="5" stroke="#56ffff" fill="none"/>
+                        <line id="svg_28" y2="256" x2="117" y1="274" x1="132" stroke-width="5" stroke="#56ffff" fill="none"/>
+                        <line id="svg_29" y2="255" x2="113" y1="230" x1="130" stroke-width="5" stroke="#56ffff" fill="none"/>
+                        <line id="svg_31" y2="477" x2="569" y1="123" x1="568" stroke-width="5" stroke="#ffffff" fill="none"/>
+                        <line id="svg_32" y2="476" x2="570" y1="456" x1="595" stroke-width="5" stroke="#ffffff" fill="none"/>
+                        <line id="svg_33" y2="476" x2="568" y1="461" x1="540" stroke-width="5" stroke="#ffffff" fill="none"/>
+                        <line id="svg_34" y2="124" x2="568" y1="142" x1="544" stroke-width="5" stroke="#ffffff" fill="none"/>
+                        <line id="svg_35" y2="123" x2="566" y1="140" x1="597" stroke-width="5" stroke="#ffffff" fill="none"/>
+                    </g>
+                </svg>
+            </p>
+        </main>
+        <aside>
+            <p class="step s1">
+                The light blue arrow represents its width. To modify it, use the width attribute: <span class="inlineCode">width: 300px;</span>
+            </p>
+
+            <p class="step s2">
+                The white blue arrow represents its height. To modify it, use the height attribute: <span class="inlineCode">height: 200px;</span>
+            </p>
+
+            <p class="step s3">
+                The yellow arrow represents the width of its borders. To modify it, use the border-width attribute: <span class="inlineCode">border-width: 10px;</span>.
+                <small>Borders can be defined separately: for instance, to change only the left border's width, you can use
+                    <span class="inlineCode">border-left-width: 5px;</span> (and same for top, right and bottom).
+                </small>
+            </p>
+        </aside>
+    </section>
+
+    <section class="slide mainAndSide">
+        <h1>CSS</h1>
+        <main>
+            <h2>CSS - Dimensions</h2>
+            <p>
+                Let's consider the image below. In this image, we will focus on the dimensions of the RED rectangle. The blue one is its parent (the container) and the green one is the content
+                (its child).
+            </p>
+            <p>
+                <svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+                    <g>
+                        <title>Layer 1</title>
+                        <rect stroke-width="40" stroke="#00007f" id="svg_2" height="590.99999" width="786.00003" y="4.5" x="7" fill="none"/>
+                        <rect stroke="#bf0000" id="svg_3" height="385.99999" width="600" y="107" x="100" stroke-width="30" fill="none"/>
+                        <rect id="svg_4" height="207" width="460" y="196.5" x="170" stroke-width="20" stroke="#00bf00" fill="none"/>
+                        <line id="svg_5" y2="92" x2="211" y1="25" x1="210" stroke-width="5" stroke="#ff7f00" fill="none"/>
+                        <line transform="rotate(-26 203.5 36.5)" stroke="#ff7f00" id="svg_6" y2="30.30955" x2="213.61728" y1="42.69045" x1="193.38273" stroke-width="5" fill="none"/>
+                        <line transform="rotate(-26 203.5 36.5)" stroke="#ff7f00" id="svg_7" y2="30.30955" x2="213.61728" y1="42.69045" x1="193.38273" stroke-width="5" fill="none"/>
+                        <line id="svg_8" y2="26" x2="212" y1="44" x1="229" stroke-width="5" stroke="#ff7f00" fill="none"/>
+                        <line id="svg_10" y2="91" x2="210" y1="76" x1="195" stroke-width="5" stroke="#ff7f00" fill="none"/>
+                        <line id="svg_11" y2="89" x2="211" y1="74" x1="228" stroke-width="5" stroke="#ff7f00" fill="none"/>
+                        <line id="svg_14" y2="184" x2="321" y1="123" x1="321" stroke-width="5" stroke="#ff00ff" fill="none"/>
+                        <line id="svg_15" y2="185" x2="321" y1="165" x1="339" stroke-width="5" stroke="#ff00ff" fill="none"/>
+                        <line id="svg_16" y2="183" x2="320" y1="170" x1="301" stroke-width="5" stroke="#ff00ff" fill="none"/>
+                        <line id="svg_17" y2="124" x2="321" y1="134" x1="307" stroke-width="5" stroke="#ff00ff" fill="none"/>
+                        <line id="svg_18" y2="122" x2="322" y1="135" x1="345" stroke-width="5" stroke="#ff00ff" fill="none"/>
+                        <line id="svg_19" y2="120" x2="467" y1="92" x1="466" stroke-width="5" stroke="#ffff00" fill="none"/>
+                        <line id="svg_20" y2="120" x2="467" y1="107" x1="487" stroke-width="5" stroke="#ffff00" fill="none"/>
+                        <line transform="rotate(11.9908 459.5 115.5)" id="svg_21" y2="120" x2="467" y1="111" x1="452" stroke-width="5" stroke="#ffff00" fill="none"/>
+                        <line id="svg_23" y2="92" x2="464" y1="98" x1="480" stroke-width="5" stroke="#ffff00" fill="none"/>
+                        <line transform="rotate(-34.6064 459.5 97)" id="svg_24" y2="95" x2="467" y1="99" x1="452" stroke-width="5" stroke="#ffff00" fill="none"/>
+                        <line id="svg_25" y2="254" x2="684" y1="254" x1="116" stroke-width="5" stroke="#56ffff" fill="none"/>
+                        <line id="svg_26" y2="255" x2="686" y1="229" x1="662" stroke-width="5" stroke="#56ffff" fill="none"/>
+                        <line id="svg_27" y2="256" x2="685" y1="276" x1="665" stroke-width="5" stroke="#56ffff" fill="none"/>
+                        <line id="svg_28" y2="256" x2="117" y1="274" x1="132" stroke-width="5" stroke="#56ffff" fill="none"/>
+                        <line id="svg_29" y2="255" x2="113" y1="230" x1="130" stroke-width="5" stroke="#56ffff" fill="none"/>
+                        <line id="svg_31" y2="477" x2="569" y1="123" x1="568" stroke-width="5" stroke="#ffffff" fill="none"/>
+                        <line id="svg_32" y2="476" x2="570" y1="456" x1="595" stroke-width="5" stroke="#ffffff" fill="none"/>
+                        <line id="svg_33" y2="476" x2="568" y1="461" x1="540" stroke-width="5" stroke="#ffffff" fill="none"/>
+                        <line id="svg_34" y2="124" x2="568" y1="142" x1="544" stroke-width="5" stroke="#ffffff" fill="none"/>
+                        <line id="svg_35" y2="123" x2="566" y1="140" x1="597" stroke-width="5" stroke="#ffffff" fill="none"/>
+                    </g>
+                </svg>
+            </p>
+        </main>
+        <aside>
+            <p class="step s1">
+                The pink arrow represents its paddings. The padding is the space between the border of an element and its content.
+                To modify it, use the padding attribute: <span class="inlineCode">padding: 20px;</span>
+                <small>Same as for borders, paddings can be defined separately: for instance, to change only the bottom padding, you can use
+                    <span class="inlineCode">padding-bottom: 5px;</span> (and same for top, right and left).
+                </small>
+            </p>
+
+            <p class="step s2">
+                The orange arrow represents its margins. The margin is the space between an element and its parent and/or siblings.
+                To modify it, use the margin attribute: <span class="inlineCode">margin: 20px;</span>
+                <small>Same as for borders, margins can be defined separately: for instance, to change only the top margin, you can use
+                    <span class="inlineCode">margin-top: 5px;</span> (and same for bottom, right and left).
+                </small>
+            </p>
+        </aside>
+    </section>
+
+    <section class="slide">
+        <h1>CSS</h1>
+        <article>
+            <h2>CSS - Dimensions</h2>
+            <p>2 useful points to note about dimensions:</p>
+
+            <p class="step s1">Margins, paddings, and border can be negative. This can be used to revert another attribute's property. For instance, you can use a negative margin
+            to place an element closer to another than it would normally be.</p>
+
+            <p class="step s2">
+                In the picture on the previous slide, the blue arrow representing the width was incorrect. Width can either be the content and only the content
+                (meaning that an element with a 200 pixels width, 10 pixels padding on both sides and 5 pixels borders on both side will actually require 230px to be displayed), or the entirety
+                of the element (meaning the actual size of the content will be: width - borders - paddings). If that's not clear,
+                <a href="https://developer.mozilla.org/fr/docs/Web/CSS/box-sizing" target="_blank">here is a demo</a>. Both can be useful depending on the context.
+                To choose what you mean by width on a given element, use box-sizing (for instance, <span class="inlineCode">box-sizing: border-box;</span>).
+            </p>
+        </article>
+    </section>
+
+    <section class="slide" data-menu-category="CSS" data-menu-name="Units">
+        <h1>CSS</h1>
+        <article>
+            <h2>CSS - Units</h2>
+            <p>
+                When a size needs to be defined (may it be for width, margin, font size, or anything that require a size), many units are available in CSS.
+            </p>
+            <p class="step s1">
+                <span class="inlineCode">px</span> means pixels. It's not really the pixels of the screen, but the idea is that it is a fixed value.
+            </p>
+            <p class="step s2">
+                <span class="inlineCode">%</span> represents a percentage of the parent's same attribute. Be careful though, it works only if the parent has a defined size.
+            </p>
+            <p class="step s3">
+                <span class="inlineCode">vw/vh</span>: vw is viewport width, 1vw is 1% of the width of the browser ; vh is the same but for the height of the browser.
+            </p>
+            <p class="step s4">
+                <span class="inlineCode">(r)em</span>: em is the computed value of the font-size of the current element ; rem is the computed value of the font-size of the root element.
+            </p>
+
+            <small  class="step s5">... and a few others, but they are way less used.</small>
+        </article>
+    </section>
+
+    <section class="slide" data-menu-category="CSS" data-menu-name="Display">
+        <h1>CSS</h1>
+        <article>
+            <h2>CSS - Display</h2>
+            <p class="step s1">
+                <span class="inlineCode">display</span> is a CSS property which define the characteristics of an element
+                (what space does it naturally take, which properties can be used on him to modify its position and size, ...).
+            </p>
+
+            <p class="step s2">
+                There are 5 possible values for display: inline, block, inline-block, flex, and grid.
+                <small>Actually, there are a few more, such as table, but there so 2002 that we won't talk about them.</small>
+            </p>
+
+            <p class="step s3">
+                By default, all HTML elements are either inline or block.
+                <small>Except &lt;table&gt;...</small>
+            </p>
+        </article>
+    </section>
+
+    <section class="slide">
+        <h1>CSS</h1>
+        <article>
+            <h2>CSS - Simple displays</h2>
+            <p class="step s1">
+                Inline elements (such as &lt;span&gt; or any element on which the CSS code <span class="inlineCode">display: inline;</span> is used) take only the space they need,
+                both horizontally and vertically. You cannot resize them, or add a margin or padding on them (for instance, <span class="inlineCode">width: 300px;</span> would do nothing).
+            </p>
+
+            <p class="step s2">
+                Block elements (such as &lt;p&gt; or any element on which the CSS code <span class="inlineCode">display: block;</span> is used) take only the space they need vertically,
+                but use all the horizontal space of their parent. You can resize them and apply margin and padding
+                (e.g., <span class="inlineCode">width: 300px;</span> would force the width of the element to be 300px).
+            </p>
+
+            <p class="step s3">
+                Inline-Block elements (any element on which the CSS code <span class="inlineCode">display: inline-block;</span> is used) will take the best of both inline and block worlds:
+                elements will only take the space they need horizontally and vertically, while allowing resize, margins and paddings !
+            </p>
+        </article>
+    </section>
+
+    <section class="slide">
+        <h1>CSS</h1>
+        <article>
+            <h2>CSS - Flexbox</h2>
+            <p class="step s1">
+                <span class="inlineCode">display: flex;</span> activates the flex display for the given elements and its children.
+                To understand how it works, there are 2 great ressources on the web that I HIGHLY recommend:
+            </p>
+
+            <p class="step s2">
+                <a href="http://flexboxfroggy.com/" target="_blank">Flexbox Froggy</a> is game where you have to put the correct CSS for the frogs to reach their water lilies.
+                There are 24 levels, but each require less than a minute, and they go from the basics of flexbox to some advanced layouts, always in less than 5 lines of code.
+            </p>
+
+            <p class="step s3">
+                Once you have successfully resolved all the Flexbox Froggy exercises, the second resource is
+                <a href="https://jonitrythall.com/flexbox-cheatsheet" target="_blank">the clearest cheatsheet I have ever seen about flexbox</a>.
+            </p>
+        </article>
+    </section>
+
+    <section class="slide">
+        <h1>CSS</h1>
+        <article>
+            <h2>CSS - Grid</h2>
+            <p class="step s1">
+                <span class="inlineCode">display: grid;</span> is another magical tool of CSS, used to display items like if the container was a table.
+            </p>
+
+            <p class="step s2">
+                <a href="https://cssgridgarden.com/" target="_blank">Grid Garden</a> is a game made by the same company as Flexbox Froggy and the concept is the same, but for grids.
+            </p>
+
+            <p class="step s3">
+                Once you've mastered the CSS attributes to write to reach you dream layout, the next resource shows
+                <a href="https://web.dev/one-line-layouts/" target="_blank">how to build 10 classic layouts in a few lines of code </a>,
+                using either flex or grid. I strongly advise you to take a look, at least to see what can be achieved easily with those features.
+            </p>
+        </article>
+    </section>
+
+    <section class="slide" data-menu-category="CSS" data-menu-name="Positioning">
+        <h1>CSS</h1>
+        <article>
+            <h2>CSS - Positioning</h2>
+            <p>
+                <span class="inlineCode">position</span> is a CSS property which define how the position of an element can be manipulated in CSS.
+            </p>
+            <p class="step s1">
+                There are 5 main possible values for position: unset, fixed, absolute, relative, and sticky. Once the position attribute is set to a value, 4 new properties become active:
+                top, right, left, and bottom. Those 4 properties let the developer move the element relatively to a specific position (depending on the chosen value for position).
+            </p>
+            <p class="step s2">
+                By default, all HTML elements are unset, which means they cannot be moved from their position. left, right, top and bottom properties do nothing.
+            </p>
+        </article>
+    </section>
+
+    <section class="slide">
+        <h1>CSS</h1>
+        <article>
+            <h2>CSS - Positioning</h2>
+            <p>
+                <span class="inlineCode">position: relative;</span> allows the element to be moved relatively to itself, meaning that <span class="inlineCode">left: 10px;</span> will move it
+                10 pixels on the left.
+            </p>
+            <p class="step s1">
+                <span class="inlineCode">position: fixed;</span> allows the element to be positioned relatively to the browser, meaning that
+                <span class="inlineCode">left: 10px;</span> will place the element 10 pixels away from the left border of the browser.
+                <small>When using fixed position, the element is removed from the DOM, so other elements will be placed as if the fixed one didn't exist.</small>
+            </p>
+            <p class="step s2">
+                <span class="inlineCode">position: absolute;</span> allows the element to be positioned relatively to its first positioned ancestor, meaning that
+                <span class="inlineCode">left: 10px;</span> will place the element 10 pixels away from the left border of the first ancestor which has position set to something else than unset.
+                <small>When using absolute position, the element is removed from the DOM, so other elements will be placed as if the absolute one didn't exist.</small>
+            </p>
+        </article>
+    </section>
+
+    <section class="slide">
+        <h1>CSS</h1>
+        <article>
+            <h2>CSS - Positioning</h2>
+            <p>
+                <span class="inlineCode">position: sticky;</span> behaves differently: a sticky item will behave like position: fixed,
+                but only inside its container and only when the user scrolls outside the value defined by left, right, top or left.
+            </p>
+            <p class="codepen" data-height="500" data-default-tab="html,result" data-slug-hash="MWXgYGL" data-preview="true" data-user="Utopsia"
+               style="height: 500px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+              <span>See the Pen <a href="https://codepen.io/Utopsia/pen/MWXgYGL">Positon Sticky to Bottom</a> by Benjamin Vella (<a href="https://codepen.io/Utopsia">@Utopsia</a>)
+              on <a href="https://codepen.io">CodePen</a>.</span>
+            </p>
+            <small><a href="https://elad.medium.com/css-position-sticky-how-it-really-works-54cd01dc2d46" target="_blank">Original content.</a> </small>
+            <script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
+        </article>
+    </section>
+
+    <section class="slide" data-menu-category="CSS" data-menu-name="Transitions (in progress)">
+        <h1>CSS</h1>
+        <article>
+            <h2>CSS - Transitions</h2>
+            <p>
+                SOON
+            </p>
+        </article>
+    </section>
+
+    <section class="slide" data-menu-category="CSS" data-menu-name="Transformations (in progress)">
+        <h1>CSS</h1>
+        <article>
+            <h2>CSS - Transformations</h2>
+            <p>
+                SOON
+            </p>
+        </article>
+    </section>
+
+    <section class="slide" data-menu-category="CSS" data-menu-name="Media Queries (in progress)">
+        <h1>CSS</h1>
+        <article>
+            <h2>CSS - Media Queries</h2>
+            <p>
+                SOON
+            </p>
+        </article>
     </section>
 
     <section class="slide">
@@ -1292,16 +1685,16 @@ language is specified in the <html> tag below, open this file in a decent browse
         <article>
             <h2>NodeJs</h2>
             <p class="step s1">
-                Executing JS on a browser works well, but is limited: you cannot access files or run commands outside the browser. Problem is: natively, Operating Systems have no tools to execute
-                JavaScript Code, because the JS engines are possessed in majority by browsers.
+                Executing JS on a browser works well, but is limited: you cannot access files or run commands outside the browser. Problem is:
+                natively, Operating Systems have no tools to execute JavaScript Code, because the JS engines are possessed in majority by browsers.
             </p>
             <p class="step s2">
-                That is where NodeJs enters. It is a CLI built over V8 (Google Chrome's JavaScript Engine). Thanks to its use of V8, NodeJs is able to execute JS code, and since it's not a browser,
-                it allows different features (to manipulate files on the computer for instance).
+                That is where NodeJs enters. It is a CLI built over V8 (Google Chrome's JavaScript Engine). Thanks to its use of V8, NodeJs is able to execute JS code,
+                and since it's not a browser, it allows different features (to manipulate files on the computer for instance).
             </p>
             <p class="step s3">
-                We can create REST servers in many languages, and JS is part of the list. One of the main advantages is that having a JS server ease a lot communications since it's the same language
-                on both side of the call.
+                We can create REST servers in many languages, and JS is part of the list.
+                One of the main advantages is that having a JS server ease a lot the communications since it's the same language on both side of the call.
             </p>
         </article>
     </section>
@@ -1395,7 +1788,6 @@ language is specified in the <html> tag below, open this file in a decent browse
 
         // Steps are animation within a page. This function aims at displaying every step until the given one (included).
         function showStep(pageNumber, stepNumber) {
-            //debugger;
             // Case 1: stepNumber is -1 in which case we need to display all the steps from the previous slide.
             if (stepNumber === -1) {
                 showPage(pageNumber-1, -2);
@@ -1403,7 +1795,6 @@ language is specified in the <html> tag below, open this file in a decent browse
             } else if (stepNumber > 0 && !document.querySelector(`#page${pageNumber} .step.s${stepNumber}`)) {
                 showPage(pageNumber+1, 0);
             } else {
-                //debugger;
                 // Case 3: stepNumber is in a correct range. In this case, let's display all the steps up to the current one.
                 // For simplicity matters, we will start by hiding all steps, and then show the ones we do not want.
                 for (let step of document.querySelectorAll(`#page${pageNumber} .step`)) {

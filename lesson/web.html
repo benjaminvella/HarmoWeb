@@ -268,7 +268,7 @@ language is specified in the <html> tag below, open this file in a decent browse
             <p>If you know how to use Git, clone the repo.</p>
             <p>If you don't, click "Code" --> "Download ZIP".</p><br>
             <p>
-                Also, keep in mind that this lesson has been written in HTML, CSS, and JS, so if you need example about something explained in the slides, simply open this file
+                Also, keep in mind that this lesson has been written in HTML, CSS, and JS, so if you need examples about something explained in the slides, simply open this file
                 in an editor and read it, I used most of what is taught in this course to build the slides (and the code is commented).
             </p>
         </article>
@@ -725,6 +725,33 @@ language is specified in the <html> tag below, open this file in a decent browse
                 <code>
                     div:nth-child(2) {color: blue;}
                 </code>
+            </p>
+        </main>
+        <aside>
+            <code>
+                &lt;article class="foo"&gt;<br>
+                    &lt;h1&gt;Title of the article&lt;/h1&gt;<br>
+                    <span class="specialCodeLine">&lt;div class="foo bar" id="uniqueId42"&gt; Content &lt;/div&gt;</span><br>
+                    <span class="secondaryCodeLine">&lt;div class="bar" id="uniqueId43"&gt; Another content &lt;/div&gt;</span><br>
+                &lt;/article&gt;
+            </code>
+        </aside>
+    </section>
+
+    <section class="slide mainAndSide">
+        <h1>CSS</h1>
+        <main>
+            <h2>CSS - Selectors</h2>
+            <p>We won't see all pseudo-classes, but let's cite 2 of them which drastically change the way to think CSS.</p>
+            <p class="step s1">
+                <span class="inlineCode">:has(selector)</span> matches the parent of the given selector !
+                For instance, <span class="inlineCode">a:has(> img)</span> will select all &lt;a&gt; elements having an img has child.
+            </p>
+            <p class="step s2">
+                <span class="inlineCode">:is(selectors)</span> allows to regroup parents to write shorter CSS.
+                For instance, <span class="inlineCode">:is(header, main, footer) p</span> will select all &lt;p&gt; elements which are descendants
+                of either header, main, or footer elements.
+                <small class="step s3">For comparison, wihtout <span class="inlineCode">:is()</span> we would have written <span class="inlineCode">header p, main p, footer p</span></small>
             </p>
         </main>
         <aside>

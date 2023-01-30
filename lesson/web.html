@@ -525,14 +525,17 @@ language is specified in the <html> tag below, open this file in a decent browse
                 <span class="step s3 codeComment">&lt;!-- Links use the href attribute to define their target.
                     It can be a URL, a phone number, a mail, as long as the href's value is correct, it will work.
                     If you want the link to open in a new tab, you can add the attribute: target="_blank". --&gt;</span>
-                <span class="step s3">&lt;a href="tel:+33836656565"&gt;Click to call Santa in France (in the 90's at least)&lt;/a&gt;</span>
-                <small class="step s3">Reference can be find <a href="https://www.youtube.com/watch?v=ONTVUomrRik" target="_blank">here</a>.</small><br>
+                <span class="step s3">&lt;a href="tel:+33836656565" target="_blank"&gt;Click to call Santa in France (in the 90's at least)&lt;/a&gt;</span>
+                <small class="step s3">Reference can be found <a href="https://www.youtube.com/watch?v=ONTVUomrRik" target="_blank">here</a>.</small><br>
 
-                <span class="step s4 codeComment">&lt;!-- Titles are usually represented by a h[1-4] tag. --&gt;</span>
-                <span class="step s4">&lt;h1&gt;Title&lt;/h1&gt;</span><br>
-                <span class="step s4">&lt;h2&gt;Sub-title&lt;/h2&gt;</span><br>
-                <span class="step s4">&lt;h3&gt;Sub-sub-title&lt;/h3&gt;</span><br>
-                <span class="step s4">&lt;h4&gt;Sub-sub-sub-title&lt;/h4&gt;</span>
+                <span class="step s4 codeComment">&lt;!-- A button is represented by the button tag. --&gt;</span>
+                <span class="step s4">&lt;button&gt;Click me !&lt;/button&gt;</span><br><br>
+
+                <span class="step s5 codeComment">&lt;!-- Titles are usually represented by a h[1-4] tag. --&gt;</span>
+                <span class="step s5">&lt;h1&gt;Title&lt;/h1&gt;</span><br>
+                <span class="step s5">&lt;h2&gt;Sub-title&lt;/h2&gt;</span><br>
+                <span class="step s5">&lt;h3&gt;Sub-sub-title&lt;/h3&gt;</span><br>
+                <span class="step s5">&lt;h4&gt;Sub-sub-sub-title&lt;/h4&gt;</span>
             </code>
         </article>
     </section>
@@ -557,7 +560,7 @@ language is specified in the <html> tag below, open this file in a decent browse
 
                 <span class="step s4 codeComment">&lt;!-- Canvas allows drawing, but the APIs are way too complex to be defined in this guide. If you want to know more,
                     you can start by <a href="https://developer.mozilla.org/fr/docs/Web/HTML/Element/canvas" target="_blank">the documentation</a>
-                    and/or find tutorials online. For now, know that canvas require a width and height, and that the content of the tag in a message in case the browser cannot display
+                    and/or find tutorials online. For now, know that canvas require a width and height, and that the content of the tag is a message in case the browser cannot display
                     the canvas. All the drawing is actually done in JavaScript (... unless you want to draw in 3D, but that's another story). --&gt;</span>
                 <span class="step s4">&lt;canvas width="600px" height="800px"&gt;Sorry, your browser cannot display canvas.&lt;/canvas&gt;</span><br><br>
             </code>
@@ -869,7 +872,7 @@ language is specified in the <html> tag below, open this file in a decent browse
             </p>
 
             <p class="step s2">
-                The white blue arrow represents its height. To modify it, use the height attribute: <span class="inlineCode">height: 200px;</span>
+                The white arrow represents its height. To modify it, use the height attribute: <span class="inlineCode">height: 200px;</span>
             </p>
 
             <p class="step s3">
@@ -1504,7 +1507,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         <article>
             <h2>Events</h2>
             <p class="step s1">
-                An important feature of JavaScript is to allow Event-oriented development, which means that instead of following a pre-defined flow, code can be executed as a
+                An important feature of JavaScript is to allow Event-oriented programming, which means that instead of following a pre-defined flow, code can be executed as a
                 response to an event triggered by the user's actions.
             </p>
             <p class="step s2">
@@ -1516,11 +1519,43 @@ language is specified in the <html> tag below, open this file in a decent browse
             </p>
 
             <code class="step s7">
-                <span class="codeComment">// To listen to an event, you need to call addEventListener() to an Element:</span>
+                <span class="codeComment">// To listen to an event, you need to call addEventListener() on an Element:</span>
                 let button = document.getElementsByTagName("button");<br>
                 button.addEventListener("click", function(event) { console.log("button has been clicked !") });
             </code>
             <p class="step s8">If you need to listen to the event everywhere on the page, you can use window.addEventListener()</p>
+        </article>
+    </section>
+
+    <section class="slide">
+        <h1>JS</h1>
+        <article>
+            <h2>Events</h2>
+            <p class="step s1">
+                If you need longer code to be executed when an event triggers, you may set a function to be called:
+            </p>
+            <code class="step s2">
+                <span class="codeComment">// Call myMethod(event) when a button is clicked:</span>
+                let button = document.getElementsByTagName("button");<br>
+                button.addEventListener("click", myMethod);<br>
+                ...<br>
+                function myMethod(event) { ... }
+            </code>
+            <p class="step s3">
+                The <span class="inlineCode">event</span> argument automatically sent to the handler changes slightly depending on the event
+                (for instance, a click event will contain the mouse position and a keypress event will contain the char code of the key being pressed).
+                However, some properties will be present in any case.
+            </p>
+            <code class="step s4">
+                function myMethod(event) {<br>
+                <span class="codeComment">    // We can access the HTML element on which the event has been triggered:</span>
+                    console.log(event.target);<br>
+                <span class="codeComment">    // We can stop the event from propagating to other triggered elements:</span>
+                    event.stopPropagation();<br>
+                <span class="codeComment">    // We can even stop the element to perform its natural behavior:</span>
+                    event.preventDefault();<br>
+                }
+            </code>
         </article>
     </section>
 
@@ -1707,7 +1742,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         </article>
     </section>
 
-    <section class="slide" data-menu-category="JS" data-menu-name="NodeJS (in progress)">
+    <section class="slide" data-menu-category="JS" data-menu-name="NodeJS">
         <h1>JS</h1>
         <article>
             <h2>NodeJs</h2>
@@ -1731,7 +1766,7 @@ language is specified in the <html> tag below, open this file in a decent browse
         <article>
             <h2>NodeJs - basic server</h2>
             <p class="step s1">
-                NodeJS possess many modules (natively and non-native but free). Downloading a module is as easy as "npm install moduleName" ; add the module to a JS script is done in one line by
+                NodeJS possess many modules (native and non-native but free). Downloading a module is as easy as "npm install moduleName" ; adding a module to a JS script is done in one line by
                 "const name = require(moduleName);", and then all the features of the module are available.
             </p>
             <p class="step s2">
@@ -1748,9 +1783,102 @@ language is specified in the <html> tag below, open this file in a decent browse
                 http.createServer method takes 1 argument: a callback, which is a function that will be called every time a request is received by the server.<br>
                 This callback function takes 2 arguments:<br>
                 - request, which contains all the information about the request (url, method, headers, ...).<br>
-                - response, which contains methods to send an information back to the client (<a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes" target="_blank">statusCode</a>,
-                setHeader() to add/update a header, end(body) to send back the request with the given body).
+                - response, which contains methods to send an information back to the client (statusCode, headers, data).
             </p>
+        </article>
+    </section>
+
+    <section class="slide">
+        <h1>JS</h1>
+        <article>
+            <h2>NodeJs - request</h2>
+            <p class="step s1">
+                Request is a js object containing the data sent by the user when requesting a resource on the server.
+            </p>
+            <code class="step s2">
+                const http = require('http');<br>
+                http.createServer(function(request, response) {<br>
+                <span class="step s3">
+                    <span class="codeComment">    // URL</span>
+                        request.url
+                </span>
+                <span class="step s4">
+                    <span class="codeComment">    // Method (GET, POST, PUT, DELETE, OPTIONS, ...)</span>
+                        request.method
+                </span>
+                <span class="step s5">
+                    <span class="codeComment">    // Headers</span>
+                        request.headers
+                </span>
+                <span class="step s6">
+                    <span class="codeComment">    // Body</span>
+                        let body = "";<br>
+                        request.on('data', (chunk) => {body += chunk}<br>
+                        request.on('end', () => { ... });<br>
+                </span>
+                <span class="step s2">
+                    }).listen(8001);
+                </span>
+            </code>
+        </article>
+    </section>
+
+    <section class="slide">
+        <h1>JS</h1>
+        <article>
+            <h2>NodeJs - response</h2>
+            <p class="step s1">
+                Response is a js object containing methods and data to send to the client.
+            </p>
+            <code class="step s2">
+                const http = require('http');<br>
+                http.createServer(function(request, response) {<br>
+                <span class="step s3">
+                    <span class="codeComment">    // Status code</span>
+                        response.statusCode = 418;
+                </span>
+                <span class="step s4">
+                    <span class="codeComment">    // Other headers</span>
+                        response.setHeader('content-Type', 'text/HTML');
+                </span>
+                <span class="step s5">
+                    <span class="codeComment">    // Body</span>
+                        response.end(data);<br>
+                </span>
+                <span class="step s2">
+                    }).listen(8001);
+                </span>
+            </code>
+        </article>
+    </section>
+
+    <section class="slide">
+        <h1>JS</h1>
+        <article>
+            <h2>NodeJs - File manipulation</h2>
+            <p class="step s1">
+                A native module allows the developer to manipulate files on the system. This module is fs
+                (which stands for FileSystem). This module contains a lot of methods and options, but let's see the basics:
+            </p>
+            <code class="step s2">
+                const fs = require('fs');<br>
+                <span class="step s3">
+                    let data = "lorem ipsum dolor sit amet..."<br>
+                </span>
+                <span class="step s4">
+                    <span class="codeComment">// Write the content in a file</span>
+                    fs.writeFile("myFile.txt", data, (error) => {<br>
+                        if (error) { // do something. }<br>
+                    });
+                </span>
+                <span class="step s5">
+                    <span class="codeComment">// Read a file</span>
+                    let fileName = "myFile.txt";<br>
+                    fs.readFile(pathName, function(error, data) {<br>
+                        if (error) { // do something. }<br>
+                        else { // use data. }<br>
+                </span>
+            </code>
         </article>
     </section>
 

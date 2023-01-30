@@ -1708,8 +1708,8 @@ language is specified in the <html> tag below, open this file in a decent browse
                         <span class="codeComment">// We can of course change the options if need be.</span>
                         fetch('http://mywebsite.com/me', {<br>
                             method: "POST",<br>
-                            headers: { 'Content-Type': "application/json" }<br>
-                            body: { JSON.stringify(data) }<br>
+                            headers: { 'Content-Type': "application/json" },<br>
+                            body: JSON.stringify(data)<br>
                         }).then(function(data) {<br>
                             console.log(data);<br>
                         });

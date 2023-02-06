@@ -188,45 +188,6 @@
                             Update the login logic so that if the username/password are found in the db, the value sent in the response is the username but encrypted by JWT
                             (you can use <span class="inlineCode">jwt.sign({username: username}, secretCode, {expiresIn: "1d"});</span> to do so).
                         </li>
-                        <li>
-
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </section>
-        <section>
-            <h2>Exercise 4 - Connexion</h2>
-            <p>
-                Now that we can signin users, let's log them in.
-            </p>
-            <ul>
-                <li>
-                    In TD2.html, update the #login article to add username/password inputs and a "Log in" button.
-                </li>
-                <li>
-                    In TD2.js, add an event listener to the Log in button, and send a POST request to localhost:8765/login containing the 2 inputs.
-                </li>
-                <li>
-                    In index.js, add a check for POST requests to /login. In this case, run a SQL query to select the username of the user if the password match
-                    (<span class="inlineCode">db.get(`SELECT username FROM user WHERE username=? and password=?`, [data.username, data.password], function(error, result) {});</span>) :
-                    if an error occurs, return it ; Otherwise we now want to return an information that the front will be able to use to guarantee the user is logged in while being secure.
-                    For that, we will encrypt a token server-side, and send it to the client. Since the client cannot decrypt it, the server can ensure the content of the token is correct.
-                    To do that, we will use JWToken:
-                    <ul>
-                        <li>
-                            <span class="inlineCode">npm install jsonwebtoken</span>
-                        </li>
-                        <li>
-                            <span class="inlineCode">const jwt = require('jsonwebtoken');</span>
-                        </li>
-                        <li>
-                            In your index.js (outside every function, at the top of the file) define a variable secretCode containing a string of your choice.
-                        </li>
-                        <li>
-                            Update the login logic so that if the username/password are found in the db, the value sent in the response is the username but encrypted by JWT
-                            (you can use <span class="inlineCode">jwt.sign({username: username}, secretCode, {expiresIn: "1d"});</span> to do so).
-                        </li>
                     </ul>
                 </li>
             </ul>

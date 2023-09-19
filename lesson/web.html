@@ -1466,7 +1466,7 @@ language is specified in the <html> tag below, open this file in a decent browse
                 <span class="step s5">- <span class="inlineCode">Element.id</span> gives you the id of the Element<br></span>
                 <span class="step s6">- <span class="inlineCode">Element.tagName</span> gives you the tag of the Element<br></span>
                 <span class="step s7">- <span class="inlineCode">Element.innerHTML</span> contains the entirety of the HTML contained in it.<br></span>
-                <small class="step s7">A fast way to remove all content from a node is to set innerHTML to an empty string: <span class="inlineCode">Element.innerHTML("");</span></small>
+                <small class="step s7">A fast way to remove all content from a node is to set innerHTML to an empty string: <span class="inlineCode">Element.innerHTML = "";</span></small>
             </p>
             <p class="step s8">
                 Methods:<br>
@@ -1520,7 +1520,7 @@ language is specified in the <html> tag below, open this file in a decent browse
 
             <code class="step s7">
                 <span class="codeComment">// To listen to an event, you need to call addEventListener() on an Element:</span>
-                let button = document.getElementsByTagName("button");<br>
+                let button = document.getElementsByTagName("button")[0];<br>
                 button.addEventListener("click", function(event) { console.log("button has been clicked !") });
             </code>
             <p class="step s8">If you need to listen to the event everywhere on the page, you can use window.addEventListener()</p>
